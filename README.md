@@ -1,5 +1,5 @@
 # **Информация по игре Ace of Spades 0.75 и сервере zhabaserver**
-v0.3.3  
+v0.3.4  
 by EvgenZhaba
 ____
 
@@ -541,6 +541,11 @@ https://github.com/piqueserver/piqueserver/issues/610
 
 `\zhabaserver\scripts\kicklimbo.py` :star:  
 Кикает тех, кто слишком долго не может определиться с выбором команды.  
+
+`\zhabaserver\scripts\pingstaff.py` :star:  
+Сообщение админам отправляется не только админам, но и модераторам, и гвардам.  
+**/admin \<message\>**  
+Отправить сообщение всем админам, модераторам и гвардам онлайн.  
 
 `\zhabaserver\scripts\printshortscripts.py` :star:  
 Выводит список серверов на сервере, заменяя "piqueserver.scripts" на "ps".  
