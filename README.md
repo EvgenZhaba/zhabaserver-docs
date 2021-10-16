@@ -1,5 +1,5 @@
 # **Информация по игре Ace of Spades 0.75 и сервере zhabaserver**
-v0.3.6  
+v0.3.7  
 by EvgenZhaba
 ____
 
@@ -9,13 +9,32 @@ ____
 Все дистрибутивы также есть в папке `1. distrib`  
 https://www.buildandshoot.com/download/ - тут можно скачать: лаунчер, OpenSpades (win, mac), оригинальный клиент 0.75, 0.76.
 
-### 1.1 Лаунчер buildandshoot
+### Лаунчер buildandshoot
 http://launcher.buildandshoot.com/Build%20and%20Shoot%201.2%20Setup.exe  
 SHA1: 9F24C2749B7697262284F615D44199F3ECD22831
 
 Менеджер версий, графический интерфейс для конфига.  
 
-### 1.2 OpenSpades  
+### Spadille  
+https://nateshoffner.com/projects/spadille/  
+SHA1: 3B3ED500985F0065D52A8636185CAE3DBE5A8B8F  
+
+Графический интерфейс. Показывает сервера с пингом, есть настройки для ванильного клиента. Можно подключиться напрямую по ip к какому-то серверу. Есть конвертер адреса в айпи и обратно. Встроен slab6 для редактирования файлов игры. Есть скриншотилка.   
+
+### Voxlap
+0.75  
+http://www.spadille.net/aos075install.msi  
+SHA1: 46D03AC636CF8BBB49D43133DE791C4AB60059C9  
+
+**Тот самый тузач** 0.75. Ванильная версия. Используется на большинстве серверов мастер-сервера https://www.buildandshoot.com/servers/
+
+0.76  
+http://www.spadille.net/aos076install_rc10.msi  
+SHA1: EB22B5ACDDD0EEE0513376186816515CB7A413D3
+
+Ace of Spades 0.76. Редко используется.
+
+### OpenSpades  
 mac: https://github.com/yvt/openspades/releases/download/v0.1.3/OpenSpades-0.1.3-Windows.zip  
 SHA1: 8B8389F8263AA9ED1AAA3CE437004F2BC7C3C086  
 windows: https://github.com/yvt/openspades/releases/download/v0.1.3/OpenSpades-0.1.3-Windows.zip  
@@ -26,24 +45,11 @@ SHA1: 19E127BCCC73715A1CB5974F66929F62E3040100
 
 Графонистая версия клиента.  
 
-### 1.3 Voxlap
-0.75  
-http://www.spadille.net/aos075install.msi  
-SHA1: 46D03AC636CF8BBB49D43133DE791C4AB60059C9  
+### Betterspades
+https://github.com/xtreme8000/BetterSpades/releases  
+SHA1: 8CB6DEF77EA675ABCE7E681D23A7EB984F6698F7  
 
-Тот самый тузач 0.75. Ванильная версия. Используется на большинстве серверов мастер-сервера https://www.buildandshoot.com/servers/
-
-0.76  
-http://www.spadille.net/aos076install_rc10.msi  
-SHA1: EB22B5ACDDD0EEE0513376186816515CB7A413D3
-
-Ace of Spades 0.76. Редко используется.
-
-### 1.4 Spadille  
-https://nateshoffner.com/projects/spadille/  
-SHA1: 3B3ED500985F0065D52A8636185CAE3DBE5A8B8F  
-
-Графический интерфейс. Показывает сервера с пингом, есть настройки для ванильного клиента. Можно подключиться напрямую по ip к какому-то серверу. Есть конвертер адреса в айпи и обратно. Встроен slab6 для редактирования файлов игры. Есть скриншотилка.   
+Ещё одна реализация Ace of Spades 0.75.
 
 ## 2. Как это установить
 Используемый порт: обычно 32887. Иногда сервер может использовать другой порт.  
@@ -123,6 +129,9 @@ SHA1: 3EA61E3F12634A9AC0B208C99D311A3A39990BCF
 Сетевой график:  F11  
 Громкость звуков: +/- Keypad  
 Выход:           Esc  
+
+Показать курсор: F5 (в оконном режиме)
+Предыдущее оружие: Q
 ```
 
 ### 4.1 Как в это играть
@@ -558,6 +567,9 @@ https://github.com/piqueserver/piqueserver/issues/610
 **/scripts**  
 Вывести список скриптов на сервере с сокращёнными именами. 
 
+`\zhabaserver\scripts\rustranslit.py` :star:  
+Транслитерация русских букв в сообщениях чата. Поддерживает: voxlap, openspades.  
+
 `\zhabaserver\scripts\spadearena.py` :star:  
 Короли Ринга! Оставляет только лопатки и переносит всех на арену в воздухе.   
 **/spademode**  
@@ -571,9 +583,9 @@ https://github.com/piqueserver/piqueserver/issues/610
 Быстрая смена цвета тумана для этого игрока. Можно задать время в секундах, по умолчанию - 10.  
 **/repeldamage \<player\>** *rdmg*  
 Весь нанесённый этим игроком урон перенаправляется в его же.  
-**/noammo \<player\> \<name\>**  
-Установить новое имя этому игроку.  
-**/namechange \<player\>** *nc*  
+**/noammo \<player\>**  
+Отключить оружие этому игроку.  
+**/namechange \<player\> \<name\>** *nc*  
 Изменить имя этого игрока.  
 **/messagechange \<player\> [message]** *msg*  
 Заменяет все сообщения в чат этого игрока.  
@@ -590,7 +602,7 @@ https://github.com/piqueserver/piqueserver/issues/610
 ### 3.4 Для определенных карт или режимов
 
 `\zhabaserver\scripts\rmatch.py` :star:  
-Проведение матчей. До и после матча нельзя что-то построить, сломать или нанести любой урон.  
+Проведение матчей. До и после матча нельзя что-то построить, сломать или нанести любой урон. В начале матча всех выкидывает из сквадов.  
 На основе https://www.buildandshoot.com/forums/viewtopic.php?t=9634  
 **/start**  
 Начать матч.  
@@ -601,7 +613,7 @@ https://github.com/piqueserver/piqueserver/issues/610
 Запрещает удержание интела: через 45 секунд игрока с интелом убивает. Для матчей.  
 
 `\zhabaserver\scripts\onectf_update.py` :star:  
-Позволяет сдать интел в чужую палатку, при этом интел не засчитается и появится в центре. Также задает координаты для спавна на карте muhosransk. Для матчей.  
+Позволяет сдать интел в чужую палатку, при этом интел не засчитается и появится в центре. Для матчей.  
 
 # Карты
 
