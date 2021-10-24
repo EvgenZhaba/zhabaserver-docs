@@ -1,5 +1,5 @@
 # **Информация по игре Ace of Spades 0.75 и сервере zhabaserver**
-v0.3.8  
+v0.3.9  
 by EvgenZhaba
 ____
 
@@ -478,7 +478,7 @@ extensions = { 'water_damage' : 2,
 
 `\zhabaserver\scripts\aimbot2_.py` :star:  
 Заменено parse на timeparse.  
-Инструменты для обнаружения читеров и повышения ЧСВ.  
+Инструменты для обнаружения читеров и повышения ЧСВ. Изначальные детекты изменены в более параноидальную сторону.  
 **/accuracy \<player\>**  
 Вывести точность этого игрока по каждому виду оружия.  
 **/hackinfo \<player\>**  
@@ -534,6 +534,9 @@ https://github.com/piqueserver/piqueserver/issues/610
 `".*(a(ll|l)ah|a(ll|l)ahu).*((a(k|h)bar)|(a(k|h)ba))"`  
 `".*DEUS.*VULT"`  
 Например, "allahu akbar".
+
+`\zhabaserver\scripts\anticheat.py` :star:  
+Изменяет механику - не отправляет игрокам информацию о местоположении врагов за пределами тумана (по умолчанию всем отправлялась инфа обо всех).  
 
 `\zhabaserver\scripts\box.py` :star:  
 Строит и удаляет параллелепипеды.  Для администраторов.  
