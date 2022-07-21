@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-gb">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OpenGL map viewer : an experiment [DEMO AVAILABLE] - Build and Shoot</title>
+<link rel="alternate" type="application/atom+xml" title="Feed - Build and Shoot" href="/forums/app.php/feed?sid=72cf94e14b26e341c9dc267ab58c7c4b"> <link rel="alternate" type="application/atom+xml" title="Feed - News" href="/forums/app.php/feed/news?sid=72cf94e14b26e341c9dc267ab58c7c4b"> <link rel="alternate" type="application/atom+xml" title="Feed - New Topics" href="/forums/app.php/feed/topics?sid=72cf94e14b26e341c9dc267ab58c7c4b"> <link rel="alternate" type="application/atom+xml" title="Feed - Forum - Add-ons &amp; Tools" href="/forums/app.php/feed/forum/13?sid=72cf94e14b26e341c9dc267ab58c7c4b"> <link rel="alternate" type="application/atom+xml" title="Feed - Topic - OpenGL map viewer : an experiment [DEMO AVAILABLE]" href="/forums/app.php/feed/topic/2457?sid=72cf94e14b26e341c9dc267ab58c7c4b">
+<link rel="canonical" href="https://www.buildandshoot.com/forums/viewtopic.php?t=2457">
+
+<link href="./assets/css/font-awesome.min.css?assets_version=42" rel="stylesheet">
+<link href="./styles/slate/theme/stylesheet.css?assets_version=42" rel="stylesheet">
+</head>
+<body id="phpbb" class="nojs notouch section-viewtopic ltr ">
+<a id="top" class="anchor" accesskey="t"></a>
+<div class="navbar navbar-default navbar-static-top">
+<div class="container">
+<div class="navbar-brand hidden-xs">Build and Shoot<span class="small"> - Ace of Spades / OpenSpades</span></div>
+<h3 class="text-center visible-xs"><a href="https://www.buildandshoot.com/servers/">Build and Shoot</a></h3>
+<form action="./search.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" method="get" id="search">
+<div id="search-box" class="navbar-form pull-right hidden-xs">
+<div class="input-group">
+<input name="keywords" id="keywords" type="search" maxlength="128" title="Search for keywords" class="form-control" size="20" value="" placeholder="Search…" />
+<div class="input-group-btn">
+<button class="btn btn-default" type="submit" title="Search">
+<i class="fa fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span>
+</button>
+<a href="./search.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" class="btn btn-default" title="Advanced search">
+<i class="fa fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span>
+</a>
+</div>
+</div>
+<input type="hidden" name="sid" value="72cf94e14b26e341c9dc267ab58c7c4b" />
+</div>
+</form>
+</div>
+</div>
+<div class="container">
+<div class="page-header" style="padding: 0; border: 0;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0370307907399937" data-ad-slot="2427397899" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+<a href="#start_here" class="anchor hide">Skip to content</a>
+<div class="navbar navbar-default" role="navigation">
+<div class="container-fluid">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-header">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-header">
+<ul id="nav-main" class="nav navbar-nav" role="menubar">
+<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Quick links</a>
+<ul class="dropdown-menu dropdown-menu-left" role="menu">
+<li><a href="./search.php?search_id=unreadposts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem"><i class="fa fa-file-o fa-fw text-danger" aria-hidden="true"></i> Unread posts</a></li>
+<li><a href="./search.php?search_id=unanswered&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem"><i class="fa fa-file-o fa-fw" aria-hidden="true"></i> Unanswered topics</a></li>
+<li><a href="./search.php?search_id=active_topics&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem"><i class="fa fa-file-o fa-fw text-primary" aria-hidden="true"></i> Active topics</a></li>
+<li class="divider"></li>
+<li><a href="./search.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem"><i class="fa fa-search fa-fw" aria-hidden="true"></i> Search</a></li>
+<li class="divider"></li>
+<li><a href="./memberlist.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem"><i class="fa fa-group fa-fw" aria-hidden="true"></i> Members</a></li>
+<li><a href="./memberlist.php?mode=team&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem"><i class="fa fa-shield fa-fw" aria-hidden="true"></i> The team</a></li>
+</ul>
+</li>
+<li><a href="/forums/app.php/help/faq?sid=72cf94e14b26e341c9dc267ab58c7c4b" rel="help" title="Frequently Asked Questions" role="menuitem"><i class="fa fa-question fa-fw" aria-hidden="true"></i> FAQ</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right" role="menubar">
+<li><a href="./ucp.php?mode=register&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem"><i class="fa fa-pencil-square-o  fa-fw" aria-hidden="true"></i> Register</a></li>
+<li><a href="#" data-toggle="modal" data-target="#login-popup" title="Login" accesskey="x" role="menuitem"><i class="fa fa-power-off fa-fw" aria-hidden="true"></i> Login</a></li>
+</ul>
+</div>
+</div>
+</div>
+<ul id="nav-breadcrumbs" class="breadcrumb clearfix" role="menubar">
+<li><span itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="https://www.buildandshoot.com/servers/" itemprop="url" data-navbar-reference="home"><i class="fa fa-home fa-fw" aria-hidden="true"></i> <span itemprop="title">Server List</span></a></span></li>
+<li><span itemtype="http://data-vocabulary.org/Breadcrumb" itemscope=""><a href="./index.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" itemprop="url" accesskey="h" data-navbar-reference="index"><span itemprop="title">Forum Index</span></a></span></li>
+<li><span itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="4"><a href="./viewforum.php?f=4&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" itemprop="url"><span itemprop="title">Ace of Spades 0.x / Classic</span></a></span></li>
+<li><span itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="6"><a href="./viewforum.php?f=6&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" itemprop="url"><span itemprop="title">Modding / Customization</span></a></span></li>
+<li><span itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="53"><a href="./viewforum.php?f=53&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" itemprop="url"><span itemprop="title">Released 3rd Party Software</span></a></span></li>
+<li><span itemtype="http://data-vocabulary.org/Breadcrumb" itemscope="" data-forum-id="13"><a href="./viewforum.php?f=13&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" itemprop="url"><span itemprop="title">Add-ons &amp; Tools</span></a></span></li>
+<li class="quick-style pull-right clearfix hidden-xs">
+<form action="./ucp.php?i=prefs&amp;mode=personal&amp;redirect=.%2Fviewtopic.php%3Ft%3D2457%26sid%3D72cf94e14b26e341c9dc267ab58c7c4b&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" method="post" class="form-inline">
+Style:
+<select class="form-control input-sm" name="quick_style" id="quick_style" onchange="this.form.submit();"><option value="40">bootlike</option><option value="46">cerulean</option><option value="45">cosmo</option><option value="47">cyborg</option><option value="48">darkly</option><option value="49">flatly</option><option value="50">journal</option><option value="51">lumen</option><option value="52">paper</option><option value="53">readable</option><option value="54">sandstone</option><option value="55">simplex</option><option value="41" selected="selected">slate</option><option value="56">spacelab</option><option value="42">superhero</option><option value="43">united</option><option value="44">yeti</option></select>
+<noscript>
+			<input type="submit" value="Change" class="btn btn-default btn-sm">
+		</noscript>
+</form>
+</li>
+
+</ul>
+<a id="start_here" class="anchor"></a>
+<div id="page-body" class="page-body" role="main">
+<h2><a href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">OpenGL map viewer : an experiment [DEMO AVAILABLE]</a></h2>
+
+<div class="alert alert-info hide">External additional handy features.</div>
+<div class="panel-group clearfix">
+<ul class="pagination pull-right">
+<li class="active"><span>1</span></li>
+<li><a href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;start=15" role="button">2</a></li>
+<li><a href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;start=30" role="button">3</a></li>
+<li class="next"><a class="button button-icon-only" href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;start=15" title="Next" rel="next" role="button"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+</ul>
+<div class="btn-group pull-left">
+<span class="btn btn-default disabled">44 posts</span>
+<span class="btn btn-default disabled">Page <strong>1</strong> of <strong>3</strong></span>
+<a href="./viewtopic.php?f=13&amp;t=2457&amp;view=unread&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#unread" class="btn btn-default">First unread post</a>
+</div>
+</div>
+<div class="panel-group clearfix">
+<div class="pull-left">
+<a href="./posting.php?mode=reply&amp;f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="btn btn-primary action-bar-btn" title="Post a reply"><i class="fa fa-reply fa-fw" aria-hidden="true"></i> Post Reply</a>
+</div>
+<div class="btn-group dropdown pull-left action-bar-btn">
+<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Topic tools"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-contents">
+<li>
+<a href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;view=print" title="Print view" accesskey="p">
+<i class="fa fa-print fa-fw" aria-hidden="true"></i> <span>Print view</span>
+</a>
+</li>
+</ul>
+</div>
+<form method="get" id="topic-search" action="./search.php?sid=72cf94e14b26e341c9dc267ab58c7c4b">
+<div class="pull-right hidden-xs" role="search">
+<div class="input-group">
+<input class="form-control" type="search" name="keywords" id="search_keywords" size="20" placeholder="Search this topic…" />
+<div class="input-group-btn">
+<button class="btn btn-default" type="submit" title="Search"><i class="fa fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">Search</span></button>
+<a href="./search.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" class="btn btn-default" title="Advanced search"><i class="fa fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">Advanced search</span></a>
+</div>
+</div>
+<input type="hidden" name="t" value="2457" />
+<input type="hidden" name="sf" value="msgonly" />
+<input type="hidden" name="sid" value="72cf94e14b26e341c9dc267ab58c7c4b" />
+</div>
+</form>
+</div>
+<a id="unread" class="anchor"></a>
+<div id="p14179" class="panel panel-primary panel-info">
+<div id="post14179" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14179">OpenGL map viewer : an experiment [DEMO AVAILABLE]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14179" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=304_1361087820.png" width="200" height="200" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a>
+<br />Coder<br /><img src="./images/ranks/buildAndShoot_Badges_sml_coder.png" alt="Coder" title="Coder" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=304&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">12</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Wed Nov 14, 2012 10:15 am</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14179">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14179&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14179" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a></strong> &raquo; Sun Feb 17, 2013 4:33 am
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14179&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Hello,<br>
+<br>
+<strong>! Downloadable demo available at the end of the post !</strong><br>
+<br>
+I am working on a simple OpenGL viewer for Ace Of Spades .vxl maps (in C language).<br>
+I made it to learn OpenGL and to see if Minecraft lighting would suit AoS.<br>
+<br>
+Comparison shots between Ace of Spades and the OpenGL viewer :<br>
+<a href="https://imgur.com/V1pGopr" class="postlink"><img src="https://i.imgur.com/V1pGopr.png" class="postimage" alt="Image"></a><br>
+<br>
+<a href="https://imgur.com/9qTOiYJ" class="postlink"><img src="https://i.imgur.com/9qTOiYJ.png" class="postimage" alt="Image"></a><br>
+<br>
+<a href="https://imgur.com/EARFcO8" class="postlink"><img src="https://i.imgur.com/EARFcO8.png" class="postimage" alt="Image"></a><br>
+<br>
+<a href="https://imgur.com/TXK0Ctt" class="postlink"><img src="https://i.imgur.com/TXK0Ctt.png" class="postimage" alt="Image"></a><br>
+<br>
+<a href="https://imgur.com/rsNub2X" class="postlink"><img src="https://i.imgur.com/rsNub2X.png" class="postimage" alt="Image"></a><br>
+<br>
+<a href="https://imgur.com/RU4xkY8" class="postlink"><img src="https://i.imgur.com/RU4xkY8.png" class="postimage" alt="Image"></a><br>
+<br>
+Video of mesa.vxl in the map viewer:
+<div data-s9e-mediaembed="youtube" style="display:inline-block;width:100%;max-width:640px"><div style="overflow:hidden;position:relative;padding-bottom:56.25%"><iframe allowfullscreen="" scrolling="no" style="background:url(https://i.ytimg.com/vi//hqdefault.jpg) 50% 50% / cover;border:0;height:100%;left:0;position:absolute;width:100%" src="https://www.youtube.com/embed/"></iframe></div></div>
+The light is propagated just like in Minecraft.<br>
+There is also lighting interpolation across block faces.<br>
+<br>
+Below a screenshot without color information (to have a better look on the shades) next to a full render :<br>
+<a href="https://imgur.com/ooPMWst" class="postlink"><img src="https://i.imgur.com/ooPMWst.png" class="postimage" alt="Image"></a><br>
+<br>
+The tool is a command line program with the following switches :
+<div class="codebox"><strong>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></strong><pre><code>   ___|         |             ___|  |     
+  |      |   |  __ \    _ \  |      |     
+  |      |   |  |   |   __/  |   |  |     
+ \____| \__,_| _.__/  \___| \____| _____|  v0.4a
+
+
+Usage : ./cubegl [OPTIONS] &lt;mapfile&gt;
+
+options :
+	-f : enable full screen
+	-w [value] : window width
+	-h [value] : window height
+	-z [value] : window depth (bits per pixel)
+	-v : verbose output
+	-d : debug
+	-p : display debug graphs (plots)
+	-b : discard block's color information (white blocks)
+	-a [0,1] : advanced OpenGL enabled or not (VBO)
+	-c [0,1] : draw clouds or not
+	-t [0,1] : draw textures on blocks or not
+	-m [0-15] : minimum lighting value (0 for dark, 15 for light, default = 2)
+	            for 0, dark areas will be pitch black
+	            for 15, there will be no dark areas
+	-s RRGGBB : color of the sky in hex values (e.g. FF0000 for red)
+	            sample values :
+	            9BD2F1 : blue sky for day (default value)
+	            001F36 : dark blue for night (you may want to lower gamma to have a better effect)
+	            E3A857 : for a sunset color (you may want to lower gamma to have a better effect)
+	-q [0,2,4,6,8,16] : antialias quality
+	-g [value] : gamma value (default 1.0) 
+	-r [value] : render distance (default 24)
+
+example :
+	./cubegl -w 1024 -h 768 -z 16 -p -v -a 0 -b -c 1 -t 0 -m 2 -f -s 001F36 -g 0.5 ./mesa.vxl
+</code></pre></div>
+If it's not working straight away, you could try the lowest settings as indicated below :
+<div class="codebox"><strong>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></strong><pre><code>cubegl -q 0 -t 0 -c 0 -w 800 -h 600 -z 16 -a 0 map.vxl
+</code></pre></div>
+On GNU/Linux, if you have a missing library error, try launching the program like this to use the included libs :
+<div class="codebox"><strong>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></strong><pre><code>LD_LIBRARY_PATH=./libs ./cubegl map.vxl
+</code></pre></div>
+Controls are WASD / ZQSD to move, shift to go down, space to go up. Esc to exit.<br>
+<br>
+Links to version 0.4a download :<br>
+<a href="https://www.mediafire.com/?h185w3434fswr90" class="postlink">GNU/Linux 32 bits (2 MB)</a><br>
+<a href="https://www.mediafire.com/?6a1z19wa28drufe" class="postlink">GNU/Linux 64 bits (2 MB)</a><br>
+<a href="https://www.mediafire.com/?q21526iwyoo2t72" class="postlink">Windows (2 MB)</a></div>
+<div class="alert alert-info">
+Last edited by <a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a> on Thu Apr 18, 2013 1:22 am, edited 2 times in total.
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14183" class="panel panel-primary panel-info">
+<div id="post14183" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14183">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14183" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=1092&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="https://i.imgur.com/Dqa7Gzu.png" width="200" height="200" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=1092&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">TheGeekZeke101</a>
+<br />Deuced Up </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=1092&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">116</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Sun Dec 02, 2012 6:54 pm</dd>
+<dd class="profile-custom-field profile-phpbb_location hidden-xs"><strong>Location:</strong> Connecticut, USA</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14183">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14183&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14183" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=1092&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">TheGeekZeke101</a></strong> &raquo; Sun Feb 17, 2013 4:38 am
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14183&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">That is beautiful. Looks very promising. Can't wait for this to be released.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14243" class="panel panel-primary panel-info">
+<div id="post14243" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14243">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14243" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=149&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=149_1352406179.png" width="107" height="109" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=149&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">CraftDinur</a>
+<br />Deuced Up </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=149&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">152</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Thu Nov 08, 2012 8:20 pm</dd>
+<dd class="profile-custom-field profile-phpbb_location hidden-xs"><strong>Location:</strong> The Enlightened Land</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14243">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14243&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14243" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=149&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">CraftDinur</a></strong> &raquo; Sun Feb 17, 2013 2:58 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14243&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">If only we could get lighting like this implemented into the full game <img class="smilies" src="./images/smilies/Green_Crying.gif" width="20" height="20" alt="Green_Crying" title="Green_Crying"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14244" class="panel panel-primary panel-info">
+<div id="post14244" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14244">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14244" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=206&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="http://kernel.pics/i/drw9Ce.jpg" width="200" height="200" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=206&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">rakiru</a>
+<br />Coder<br /><img src="./images/ranks/buildAndShoot_Badges_sml_coder.png" alt="Coder" title="Coder" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=206&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">1349</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Sun Nov 11, 2012 12:26 pm</dd>
+<dd style="margin-top: 10px;">
+<div class="btn-group dropup">
+<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Contact <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-left dropdown-contents">
+<li>
+<a href="http://aoswiki.rakiru.com/" title="Website">
+<span class="phpbb_website-icon"><i class="fa fa-globe fa-fw"></i> Website</span>
+</a>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14244">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14244&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14244" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=206&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">rakiru</a></strong> &raquo; Sun Feb 17, 2013 3:08 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14244&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Nice work. ^-^<br>
+What are you planning to do with this? Release a map-viewer? Release a library for others to use?</div>
+<div id="sig14244" class="hidden-xs"><hr /><a href="http://www.rakiru.com/" class="postlink">Website</a> | <a href="http://aoswiki.rakiru.com/" class="postlink">Wiki</a> | <a href="https://twitter.com/rabbitkillrun" class="postlink">Twitter</a> | <strong><a href="https://pastebin.com/wGB0ETyH" class="postlink">LULZ</a></strong></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14269" class="panel panel-primary panel-info">
+<div id="post14269" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14269">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14269" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=104&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=104_1361130398.png" width="120" height="120" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=104&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Yourself</a>
+<br />Coder<br /><img src="./images/ranks/buildAndShoot_Badges_sml_coder.png" alt="Coder" title="Coder" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=104&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">28</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Mon Nov 05, 2012 5:24 pm</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14269">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14269&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14269" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=104&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Yourself</a></strong> &raquo; Sun Feb 17, 2013 7:38 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14269&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Very nice! Are you only using ambient occlusion for shading? It looks to me like there are no other sources of light or any sort of shadows. Are you using screen space ambient occlusion?<br>
+<br>
+I started a thread on CPU based AO here: <a href="http://www.volumesoffun.com/phpBB3/viewtopic.php?f=14&amp;t=481" class="postlink">http://www.volumesoffun.com/phpBB3/view ... f=14&amp;t=481</a><br>
+<br>
+The idea is that hopefully AO can be used on computers with older graphics cards.<br>
+<br>
+I'm working on an engine for a new game atm. Using polyvox and Irrlicht. Screenshot: <a href="https://i.imgur.com/5RxnXfD.png" class="postlink">http://i.imgur.com/5RxnXfD.png</a><br>
+<br>
+Edit: also I think you might get better results if you implement directional lighting and turn down the AO slightly.</div>
+<div class="alert alert-info">
+Last edited by <a href="./memberlist.php?mode=viewprofile&amp;u=104&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Yourself</a> on Sun Feb 17, 2013 9:33 pm, edited 1 time in total.
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14287" class="panel panel-primary panel-info">
+<div id="post14287" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14287">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14287" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="https://www.buildandshoot.com/images/avatars/no_avitar/greenjd.png" width="100" height="100" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">HoboHob</a>
+<br />Winter Celebration 2013<br /><img src="./images/ranks/BnS_winter_2013.gif" alt="Winter Celebration 2013" title="Winter Celebration 2013" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=102&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">979</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Mon Nov 05, 2012 5:02 pm</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14287">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14287&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14287" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">HoboHob</a></strong> &raquo; Sun Feb 17, 2013 9:08 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14287&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Do us all a favor, download the Iceball source and implement this nao.</div>
+<div id="sig14287" class="hidden-xs"><hr /><a href="https://www.youtube.com/user/SlamDrag/featured" class="postlink"><img src="https://i.imgur.com/aS7NLzx.png" class="postimage" alt="Image"></a><br>
+<a href="https://pastebin.com/3e1tGsNL" class="postlink">Jagex in a nutshell</a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14303" class="panel panel-primary panel-info">
+<div id="post14303" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14303">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14303" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=304_1361087820.png" width="200" height="200" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a>
+<br />Coder<br /><img src="./images/ranks/buildAndShoot_Badges_sml_coder.png" alt="Coder" title="Coder" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=304&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">12</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Wed Nov 14, 2012 10:15 am</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14303">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14303&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14303" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a></strong> &raquo; Sun Feb 17, 2013 10:38 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14303&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Thanks everyone for your comments.<br>
+<br>
+@Yourself The algorithm used is directly the one used by Minecraft. There is no ray casting or anything, it is only a cheap method to propagate light (maximum at 15 blocks). That's why caves entrances are lighten just a little and the end of the caves are pitch black (although I am forcing a maximum darkness to prevent seeing nothing in dark places).<br>
+<blockquote><i class="fa fa-quote-left fa-2x hidden-xs"></i><cite>Yourself wrote:</cite><div class="clearfix"></div>I'm working on an engine for a new game atm. Using polyvox and Irrlicht. Screenshot: <a href="https://i.imgur.com/5RxnXfD.png" class="postlink">http://i.imgur.com/5RxnXfD.png</a></blockquote>.<br>
+<br>
+Good luck with that ;)<br>
+I started by using Ogre3d with C++ and I had pretty good results but I wanted to know how things worked under the hood.<br>
+And relying on external libraries was a mess for compilation times and for cross compiling :/<br>
+<blockquote><i class="fa fa-quote-left fa-2x hidden-xs"></i><cite>Yourself wrote:</cite><div class="clearfix"></div>Edit: also I think you might get better results if you implement directional lighting and turn down the AO slightly.</blockquote>
+I haven't planned to have shadows matching the sun's position or other light sources, but I guess it could be done with shaders, like it is in Minecraft with Sonic Ether's Unbelievable Shaders.<br>
+<blockquote><i class="fa fa-quote-left fa-2x hidden-xs"></i><cite>rakiru wrote:</cite><div class="clearfix"></div>Nice work. ^-^<br>
+What are you planning to do with this? Release a map-viewer? Release a library for others to use?</blockquote>
+Originally, I worked on this project as a proof of concept.<br>
+I knew a good client was in dev (Iceball) so I focused only on graphical aspects (as it was not the priority for Iceball).<br>
+<br>
+I have not yet decided what to do next.<br>
+I plan to release first a demo and then the source code after a bit of clean up (GPL licence).<br>
+<br>
+Many options are then possible, and all depends of the community :<br>
+- use it only as a map viewer<br>
+- use it as a base or an inspiration for new voxel based games (hence opening the source up)<br>
+- work on an alternative client for AoS : depends if people wants to participate in the project or not and if the rendering constraints (like in Minecraft) are suitable for a game like AoS. Maybe we should merge our forces instead and work only on Iceball ?<br>
+- incorporate ideas in Iceball, wink to HoboHob (but I'm not sure I'm skilled enough to incorporate concepts into Iceball, even if the latests commits have already done a lot of work with the addition of OpenGL as an alternative renderer)<br>
+- others thing I haven't thought about ? tell me !<br>
+<br>
+What you do think ?<br>
+<br>
+As a bonus, a little preview video of the mesa.vxl map <div data-s9e-mediaembed="youtube" style="display:inline-block;width:100%;max-width:640px"><div style="overflow:hidden;position:relative;padding-bottom:56.25%"><iframe allowfullscreen="" scrolling="no" style="background:url(https://i.ytimg.com/vi//hqdefault.jpg) 50% 50% / cover;border:0;height:100%;left:0;position:absolute;width:100%" src="https://www.youtube.com/embed/"></iframe></div></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14321" class="panel panel-primary panel-info">
+<div id="post14321" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14321">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14321" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=104&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=104_1361130398.png" width="120" height="120" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=104&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Yourself</a>
+<br />Coder<br /><img src="./images/ranks/buildAndShoot_Badges_sml_coder.png" alt="Coder" title="Coder" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=104&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">28</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Mon Nov 05, 2012 5:24 pm</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14321">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14321&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14321" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=104&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Yourself</a></strong> &raquo; Mon Feb 18, 2013 12:02 am
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14321&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content"><blockquote><i class="fa fa-quote-left fa-2x hidden-xs"></i><cite>melchips wrote:</cite><div class="clearfix"></div>Thanks everyone for your comments.<br>
+<br>
+@Yourself The algorithm used is directly the one used by Minecraft. There is no ray casting or anything, it is only a cheap method to propagate light (maximum at 15 blocks). That's why caves entrances are lighten just a little and the end of the caves are pitch black (although I am forcing a maximum darkness to prevent seeing nothing in dark places).<br>
+<blockquote><i class="fa fa-quote-left fa-2x hidden-xs"></i><cite>Yourself wrote:</cite><div class="clearfix"></div>I'm working on an engine for a new game atm. Using polyvox and Irrlicht. Screenshot: <a href="https://i.imgur.com/5RxnXfD.png" class="postlink">http://i.imgur.com/5RxnXfD.png</a></blockquote>.<br>
+<blockquote><i class="fa fa-quote-left fa-2x hidden-xs"></i><cite>Yourself wrote:</cite><div class="clearfix"></div>Edit: also I think you might get better results if you implement directional lighting and turn down the AO slightly.</blockquote>
+I haven't planned to have shadows matching the sun's position or other light sources, but I guess it could be done with shaders, like it is in Minecraft with Sonic Ether's Unbelievable Shaders.
+</blockquote>
+Wow I'm very impressed by the results from such a simple algorithm! One question though: the posts I've been reading on the minecraft algorithm work per-block and not per vertex. Your screenshots and videos on the other hand show variation in shading over block faces. Are the vertices different colors? What algorithm is this?<br>
+<br>
+Also I wasn't talking about shadows, but rather something like flat shading, phong shading, or gouraud shading. Flat shading is really easy to implement and will give you good results!<br>
+<br>
+Edit:<br>
+A possible implementation I came up with: at each vertex, take the average color of the blocks that make up that vertex. This way you get a nice shading effect.<br>
+<br>
+This doesn't explain something like this though:<br>
+<img src="https://i.imgur.com/no0YrjN.png" class="postimage" alt="Image"><br>
+<br>
+Edit2: I found <a href="https://github.com/overviewer/Minecraft-Overviewer/blob/master/docs/design/designdoc.rst#smooth-lighting" class="postlink">https://github.com/overviewer/Minecraft ... h-lighting</a> which explains what's going on. Very nice! <img class="smilies" src="./images/smilies/Blue_Happy3.gif" width="20" height="20" alt="Blue_Happy3" title="Blue_Happy3"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14334" class="panel panel-primary panel-info">
+<div id="post14334" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14334">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14334" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=484&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=484_1362083727.png" width="100" height="100" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=484&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Buffet_of_Lies</a>
+<br />Mapper<br /><img src="./images/ranks/buildAndShoot_Badges_sml_mapper.png" alt="Mapper" title="Mapper" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=484&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">402</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Tue Nov 20, 2012 11:25 am</dd>
+<dd class="profile-custom-field profile-phpbb_location hidden-xs"><strong>Location:</strong> Boston, MA</dd>
+<dd style="margin-top: 10px;">
+<div class="btn-group dropup">
+<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Contact <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-left dropdown-contents">
+<li>
+<a href="https://www.buildandshoot.com/viewtopic.php?f=8&amp;t=1089" title="Website">
+<span class="phpbb_website-icon"><i class="fa fa-globe fa-fw"></i> Website</span>
+</a>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14334">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14334&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14334" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=484&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Buffet_of_Lies</a></strong> &raquo; Mon Feb 18, 2013 2:25 am
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14334&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">I love the clouds.</div>
+<div id="sig14334" class="hidden-xs"><hr /><img src="http://blockman2d.servegame.com/v%5E3/bns/playerCount.png.php" class="postimage" alt="Image"><br>
+<img src="https://www.buildandshoot.com/images/ranks/buildAndShoot_Badges_sml_mapper.png" class="postimage" alt="Image"><br>
+<a href="https://www.buildandshoot.com/viewtopic.php?f=8&amp;t=1089" class="postlink">My maps.</a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14338" class="panel panel-primary panel-info">
+<div id="post14338" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14338">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14338" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="https://www.buildandshoot.com/images/avatars/no_avitar/greenjd.png" width="100" height="100" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">HoboHob</a>
+<br />Winter Celebration 2013<br /><img src="./images/ranks/BnS_winter_2013.gif" alt="Winter Celebration 2013" title="Winter Celebration 2013" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=102&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">979</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Mon Nov 05, 2012 5:02 pm</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14338">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14338&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14338" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">HoboHob</a></strong> &raquo; Mon Feb 18, 2013 3:14 am
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14338&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">If you ask me this looks 10x better than Ace of Spades 1.0!</div>
+<div id="sig14338" class="hidden-xs"><hr /><a href="https://www.youtube.com/user/SlamDrag/featured" class="postlink"><img src="https://i.imgur.com/aS7NLzx.png" class="postimage" alt="Image"></a><br>
+<a href="https://pastebin.com/3e1tGsNL" class="postlink">Jagex in a nutshell</a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14830" class="panel panel-primary panel-info">
+<div id="post14830" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14830">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14830" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=304_1361087820.png" width="200" height="200" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a>
+<br />Coder<br /><img src="./images/ranks/buildAndShoot_Badges_sml_coder.png" alt="Coder" title="Coder" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=304&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">12</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Wed Nov 14, 2012 10:15 am</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14830">
+<div class="clearfix">
+ <hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14830&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14830" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a></strong> &raquo; Wed Feb 20, 2013 1:28 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14830&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">@Yourself<br>
+Exactly, each vextex gets an average value.<br>
+Simple but very effective ^^<br>
+<br>
+@Buffet_of_Lies<br>
+I love them too ;)<br>
+It gives a nice touch to AoS maps.<br>
+<br>
+@HoboHob<br>
+Thanks mate.<br>
+I think AOS 1.0 implements the same principles but they have also added a texture to blocks and a pixelated texture on the skybox.<br>
+Their chunks tesselating seems incredibly fast. I suspect that chunks are pre-rendered at map loading screen and then just loaded from memory (that's would explain why map loading takes a huge amount of time). But I haven't checked that theory yet.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p14836" class="panel panel-primary panel-info">
+<div id="post14836" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p14836">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile14836" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=537&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=537_1353924095.gif" width="100" height="100" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=537&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Sample</a>
+<br />Deuced Up </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=537&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">83</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Wed Nov 21, 2012 8:37 pm</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content14836">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=14836&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p14836" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=537&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Sample</a></strong> &raquo; Wed Feb 20, 2013 3:26 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=14836&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Prototype AoS version with that graphic<br>
+<br>
+<img src="https://media.tumblr.com/tumblr_m3e0nyJ5Qt1r5njkm.png" class="postimage" alt="Image"></div>
+<div id="sig14836" class="hidden-xs"><hr /><img src="https://i.imgur.com/s0Hi4.png" class="postimage" alt="Image"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p24208" class="panel panel-primary panel-info">
+<div id="post24208" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p24208">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile24208" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="./download/file.php?avatar=304_1361087820.png" width="200" height="200" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a>
+<br />Coder<br /><img src="./images/ranks/buildAndShoot_Badges_sml_coder.png" alt="Coder" title="Coder" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=304&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">12</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Wed Nov 14, 2012 10:15 am</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content24208">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=24208&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p24208" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a></strong> &raquo; Sun Apr 14, 2013 7:22 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=24208&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">I have uploaded a precompiled demo for GNU/Linux (32 and 64 bits) and windows.<br>
+<br>
+The tool is a command line program with the following switches :
+<div class="codebox"><strong>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></strong><pre><code>   ___|         |             ___|  |     
+  |      |   |  __ \    _ \  |      |     
+  |      |   |  |   |   __/  |   |  |     
+ \____| \__,_| _.__/  \___| \____| _____|  v0.4a
+
+
+Usage : ./cubegl [OPTIONS] &lt;mapfile&gt;
+
+options :
+	-f : enable full screen
+	-w [value] : window width
+	-h [value] : window height
+	-z [value] : window depth (bits per pixel)
+	-v : verbose output
+	-d : debug
+	-p : display debug graphs (plots)
+	-b : discard block's color information (white blocks)
+	-a [0,1] : advanced OpenGL enabled or not (VBO)
+	-c [0,1] : draw clouds or not
+	-t [0,1] : draw textures on blocks or not
+	-m [0-15] : minimum lighting value (0 for dark, 15 for light, default = 2)
+	            for 0, dark areas will be pitch black
+	            for 15, there will be no dark areas
+	-s RRGGBB : color of the sky in hex values (e.g. FF0000 for red)
+	            sample values :
+	            9BD2F1 : blue sky for day (default value)
+	            001F36 : dark blue for night (you may want to lower gamma to have a better effect)
+	            E3A857 : for a sunset color (you may want to lower gamma to have a better effect)
+	-q [0,2,4,6,8,16] : antialias quality
+	-g [value] : gamma value (default 1.0) 
+	-r [value] : render distance (default 24)
+
+example :
+	./cubegl -w 1024 -h 768 -z 16 -p -v -a 0 -b -c 1 -t 0 -m 2 -f -s 001F36 -g 0.5 ./mesa.vxl
+</code></pre></div>
+If it's not working straight away, you could try the lowest settings as indicated below :
+<div class="codebox"><strong>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></strong><pre><code>cubegl -q 0 -t 0 -c 0 -w 800 -h 600 -z 16 -a 0 map.vxl
+</code></pre></div>
+On GNU/Linux, if you have a missing library error, try launching the program like this to use the included libs :
+<div class="codebox"><strong>Code: <a href="#" onclick="selectCode(this); return false;">Select all</a></strong><pre><code>LD_LIBRARY_PATH=./libs ./cubegl map.vxl
+</code></pre></div>
+Controls are WASD / ZQSD to move, shift to go down, space to go up. Esc to exit.<br>
+<br>
+Links to version 0.4a download :<br>
+<a href="https://www.mediafire.com/?h185w3434fswr90" class="postlink">GNU/Linux 32 bits (2 MB)</a><br>
+<a href="https://www.mediafire.com/?6a1z19wa28drufe" class="postlink">GNU/Linux 64 bits (2 MB)</a><br>
+<a href="https://www.mediafire.com/?q21526iwyoo2t72" class="postlink">Windows (2 MB)</a></div>
+<div class="alert alert-info">
+Last edited by <a href="./memberlist.php?mode=viewprofile&amp;u=304&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">melchips</a> on Sun Apr 14, 2013 7:31 pm, edited 1 time in total.
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p24215" class="panel panel-primary panel-info">
+<div id="post24215" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p24215">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile24215" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=80&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="https://i.imgur.com/pk48u.png" width="150" height="150" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=80&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Semper</a>
+<br />Deuced Up </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=80&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">627</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Thu Nov 01, 2012 6:41 pm</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content24215">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=24215&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p24215" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=80&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">Semper</a></strong> &raquo; Sun Apr 14, 2013 7:29 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=24215&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Oh my god this is amazing.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div id="p24225" class="panel panel-primary panel-info">
+<div id="post24225" class="panel-heading">
+<div class="row">
+<h4 class="panel-title col-md-9 col-sm-8 col-xs-8"><a href="#p24225">Re: OpenGL map viewer : an experiment [PREVIEW]</a></h4>
+</div>
+</div>
+<div class="post panel-body">
+<div class="row">
+<dl id="profile24225" class="postprofile col-md-3 col-sm-4 col-xs-12">
+<dt class="has-profile-rank has-avatar">
+<div class="hidden-xs">
+<a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="avatar"><img class="avatar" src="https://www.buildandshoot.com/images/avatars/no_avitar/greenjd.png" width="100" height="100" alt="User avatar" /></a> </div>
+<a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">HoboHob</a>
+<br />Winter Celebration 2013<br /><img src="./images/ranks/BnS_winter_2013.gif" alt="Winter Celebration 2013" title="Winter Celebration 2013" /> </dt>
+<dd class="hidden-xs" style="height: 10px;">&nbsp;</dd>
+<dd class="profile-posts"><strong>Posts:</strong> <a href="./search.php?author_id=102&amp;sr=posts&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">979</a></dd> <dd class="profile-joined"><strong>Joined:</strong> Mon Nov 05, 2012 5:02 pm</dd>
+</dl>
+<div class="postbody col-md-9 col-sm-8 col-xs-12">
+<div id="post_content24225">
+<div class="clearfix">
+<hr class="visible-xs" />
+<div class="post-date pull-left">
+<a class="unread" href="./viewtopic.php?p=24225&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#p24225" title="Unread post"><i class="fa fa-file fa-fw" aria-hidden="true"></i><span class="sr-only">Unread post</span></a>
+by <strong><a href="./memberlist.php?mode=viewprofile&amp;u=102&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="username">HoboHob</a></strong> &raquo; Sun Apr 14, 2013 7:59 pm
+</div>
+<div class="pull-right">
+<div class="btn-group">
+<a href="./posting.php?mode=quote&amp;f=13&amp;p=24225&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" title="Reply with quote" class="btn btn-default"><i class="fa fa-quote-left fa-fw" aria-hidden="true"></i><span class="sr-only">Quote</span></a>
+</div>
+</div>
+</div>
+<hr />
+<div class="content">Shut up and take my $0.20!<br>
+<br>
+Plz can haz src.</div>
+<div id="sig24225" class="hidden-xs"><hr /><a href="https://www.youtube.com/user/SlamDrag/featured" class="postlink"><img src="https://i.imgur.com/aS7NLzx.png" class="postimage" alt="Image"></a><br>
+<a href="https://pastebin.com/3e1tGsNL" class="postlink">Jagex in a nutshell</a></div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel-footer text-right">
+<a href="#top" class="top" title="Top"><i class="fa fa-chevron-up fa-fw icon-gray" aria-hidden="true"></i><span class="sr-only">Top</span></a>
+</div>
+</div>
+<div class="panel-group clearfix">
+<div class="pull-left">
+<a href="./posting.php?mode=reply&amp;f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="btn btn-primary action-bar-btn" title="Post a reply"><i class="fa fa-reply fa-fw" aria-hidden="true"></i> Post Reply</a>
+</div>
+<div class="btn-group dropup pull-left action-bar-btn">
+<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Topic tools"><i class="fa fa-wrench fa-fw" aria-hidden="true"></i> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-contents">
+<li>
+<a href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;view=print" title="Print view" accesskey="p">
+<i class="fa fa-print fa-fw" aria-hidden="true"></i> <span>Print view</span>
+</a>
+</li>
+</ul>
+</div>
+<form method="post" action="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="form-sm">
+<div class="btn-group dropup pull-left action-bar-btn">
+<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" title="Display and sorting options"><i class="fa fa-sort-amount-asc fa-fw" aria-hidden="true"></i> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-contents page-jump-form panel-body display-options text-nowrap">
+<li><label class="control-label">Display:</label> <select name="st" id="st"><option value="0" selected="selected">All posts</option><option value="1">1 day</option><option value="7">7 days</option><option value="14">2 weeks</option><option value="30">1 month</option><option value="90">3 months</option><option value="180">6 months</option><option value="365">1 year</option></select></li>
+<li><label class="control-label">Sort by:</label> <select name="sk" id="sk"><option value="a">Author</option><option value="t" selected="selected">Post time</option><option value="s">Subject</option></select></li>
+<li><label class="control-label">Direction:</label> <select name="sd" id="sd"><option value="a" selected="selected">Ascending</option><option value="d">Descending</option></select></li>
+<li class="divider"><li>
+<li><input type="submit" class="btn btn-default btn-sm btn-block" name="sort" value="Go" /></li>
+</ul>
+</div>
+</form>
+</div>
+<div class="panel-group clearfix">
+<ul class="pagination pull-right">
+<li class="active"><span>1</span></li>
+<li><a href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;start=15" role="button">2</a></li>
+<li><a href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;start=30" role="button">3</a></li>
+<li class="next"><a class="button button-icon-only" href="./viewtopic.php?f=13&amp;t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b&amp;start=15" title="Next" rel="next" role="button"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="sr-only">Next</span></a></li>
+</ul>
+<div class="btn-group pull-left">
+<span class="btn btn-default disabled">44 posts</span>
+<span class="btn btn-default disabled">Page <strong>1</strong> of <strong>3</strong></span>
+<a href="./viewtopic.php?f=13&amp;t=2457&amp;view=unread&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b#unread" class="btn btn-default">First unread post</a>
+</div>
+</div>
+<div class="panel-group clearfix">
+<a href="./viewforum.php?f=13&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" class="btn btn-default pull-left" accesskey="r"><i class="fa fa-chevron-left fa-fw" aria-hidden="true"></i> Return to “Add-ons &amp; Tools”</a>
+<div id="jumpbox" class="btn-group dropup pull-right">
+<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Jump to">Jump to <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right dropdown-contents">
+<li class="jumpbox"><a href="./viewforum.php?f=1&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>Build and Shoot</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=2&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Official News</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=59&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Community Events</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=60&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Official Leagues</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=25&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Clans</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=63&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Matches</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=3&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Site Feedback</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=4&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>Ace of Spades 0.x / Classic</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=5&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Ace of Spades 0.x Discussion</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=6&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;<strong>Modding / Customization</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=51&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Released Server Mods</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=8&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Maps</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=19&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>PySnip/pyspades Scripts</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=68&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Verified</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=64&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Approved</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=66&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Game Modes</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=67&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Features &amp; Enhancements</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=74&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Miscellaneous</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=77&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Bug Fixes</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=65&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Unverified</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=69&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Pending Approval</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=70&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Completed Releases</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=71&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Work In Progress</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=75&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Snippets</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=72&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Ideas / Requests</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=73&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Help!</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=32&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Released Client Mods</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=9&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Weapons</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=10&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Sights / Scopes</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=11&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Skins</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=27&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Sounds</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=30&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Splash Screens</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=55&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Miscellaneous</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=12&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Packs</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=53&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Released 3rd Party Software</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=13&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Add-ons &amp; Tools</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=37&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Support</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=56&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Help Discussions</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=38&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Guides / Tutorials</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=34&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Requests &amp; Offers</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=18&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Servers</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=15&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Social</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=35&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Server Info &amp; News</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=16&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Ban Appeals</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=17&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Admin Recruitment</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=36&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Server Operators</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=54&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Maps</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=52&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;PySnip/pyspades Scripts</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=78&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>OpenSpades</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=57&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;OpenSpades Discussion</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=79&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Servers</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=81&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;MODs</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=82&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Official Wiki</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=76&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;OpenSpades MODs</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=83&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Official Modding Wiki</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=41&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>Community Projects</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=84&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Iceball</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=42&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Noteworthy Picks</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=14&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>Ace of Spades 1.0 / Steam</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=20&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Ace of Spades 1.0 Discussion</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=45&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;<strong>Link</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=44&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Map Making Documentation for Ace of Spades Steam</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=21&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>Off-Topic</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=22&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Other Games</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=50&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Forum Games</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=23&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;The Lounge</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=39&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&nbsp; &nbsp;&#8627; &nbsp;Introductions</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=46&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>Archives</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=47&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;April 2011 to December 2011</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=48&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;January 2012 to October 2012</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=87&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b"><strong>Policies</strong></a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=88&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Rules</a></li>
+<li class="divider"></li>
+<li class="jumpbox"><a href="./viewforum.php?f=89&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">&nbsp; &nbsp;&#8627; &nbsp;Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="panel-group">
+<h4><a href="./viewonline.php?sid=72cf94e14b26e341c9dc267ab58c7c4b">Who is online</a></h4>
+<p>Users browsing this forum: No registered users and 0 guests</p>
+</div>
+</div>
+<div class="navbar navbar-default" role="navigation">
+<div class="container-fluid">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-footer">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-footer">
+<ul class="nav navbar-nav" role="menubar">
+<li><a href="https://www.buildandshoot.com/servers/" data-navbar-reference="home"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Server List
+</a></li> <li><a href="./index.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" data-navbar-reference="index">
+Forum Index
+</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right" role="menubar">
+<li>
+ <a href="./memberlist.php?mode=contactadmin&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem">
+<i class="fa fa-envelope fa-fw" aria-hidden="true"></i> Contact us
+</a>
+</li>
+<li>
+<a href="./memberlist.php?mode=team&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" role="menuitem">
+<i class="fa fa-shield fa-fw" aria-hidden="true"></i> <span>The team</span>
+</a>
+</li>
+<li>
+<a href="./memberlist.php?sid=72cf94e14b26e341c9dc267ab58c7c4b" title="View complete list of members" role="menuitem">
+<i class="fa fa-group fa-fw" aria-hidden="true"></i> Members
+</a>
+</li>
+<li>
+<a href="./ucp.php?mode=delete_cookies&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" data-ajax="true" data-refresh="true" role="menuitem">
+<i class="fa fa-trash fa-fw" aria-hidden="true"></i> Delete all board cookies
+</a>
+</li>
+<li class="navbar-text hidden-xs">All times are <span title="UTC">UTC</span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div style="margin-bottom: 20px;"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-0370307907399937" data-ad-slot="3904131099" data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div id="page-footer" class="page-footer" role="contentinfo">
+<p class="text-center">
+Powered by <a href="https://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Limited
+</p>
+<div>
+<a id="bottom" class="anchor" accesskey="z"></a>
+<img src="./cron.php?cron_type=cron.task.text_reparser.poll_option&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" width="1" height="1" alt="cron" /> </div>
+<div id="darkenwrapper" class="darkenwrapper" data-ajax-error-title="AJAX error" data-ajax-error-text="Something went wrong when processing your request." data-ajax-error-text-abort="User aborted request." data-ajax-error-text-timeout="Your request timed out; please try again." data-ajax-error-text-parsererror="Something went wrong with the request and the server returned an invalid reply.">
+<div id="darken" class="darken">&nbsp;</div>
+</div>
+<div id="phpbb_alert" class="phpbb_alert" data-l-err="Error" data-l-timeout-processing-req="Request timed out.">
+<div class="modal-content">
+<div class="modal-body">
+<a href="#" class="alert_close pull-right text-danger" title="Close window"><i class="fa fa-close fa-fw" aria-hidden="true"></i> </a>
+<h4 class="alert_title modal-title">&nbsp;</h4>
+<hr class="row" />
+<p class="alert_text"></p>
+</div>
+</div>
+</div>
+<div id="phpbb_confirm" class="phpbb_alert">
+<div class="modal-content">
+<div class="modal-body">
+<a href="#" class="alert_close pull-right text-danger" title="Close window"><i class="fa fa-close fa-fw" aria-hidden="true"></i> </a>
+<div class="alert_text"></div>
+</div>
+</div>
+</div>
+<div id="login-popup" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<a href="#" class="alert_close pull-right text-danger" title="Close window" data-dismiss="modal"><i class="fa fa-close"></i> </a>
+<h4 class="modal-title">Login</h4>
+</div>
+<div class="modal-body">
+<form method="post" action="./ucp.php?mode=login&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b">
+<div class="row">
+<div class="panel-body col-xs-12 col-sm-8 col-sm-offset-2 col-md-offset-2">
+<p class="form-group">
+<label class="sr-only" for="username">Username:</label>
+<span class="input-group">
+<span class="input-group-addon"><i class="fa fa-user fa-fw"></i> </span>
+<input id="username" name="username" tabindex="1" size="10" class="form-control" placeholder="Username" title="Username" />
+</span>
+</p>
+<p class="form-group">
+<label class="sr-only" for="password">Password:</label>
+<span class="input-group">
+<span class="input-group-addon"><i class="fa fa-key fa-fw"></i> </span>
+<input type="password" id="password" name="password" tabindex="2" size="10" placeholder="Password" title="Password" class="form-control" />
+</span>
+</p>
+<p>
+<label for="autologin"><input type="checkbox" id="autologin" name="autologin" tabindex="3" /> Remember me</label><br />
+<label for="viewonline"><input type="checkbox" id="viewonline" name="viewonline" tabindex="4" /> Hide my online status this session</label>
+</p>
+<input type="submit" tabindex="5" name="login" value="Login" class="btn btn-success btn-block" />
+<input type="hidden" name="redirect" value="./viewtopic.php?t=2457&amp;sid=72cf94e14b26e341c9dc267ab58c7c4b" />
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div> </div>
+</div>
+<script type="text/javascript" src="./assets/javascript/jquery.min.js?assets_version=42"></script>
+<script type="text/javascript" src="./assets/javascript/core.js?assets_version=42"></script>
+<script type="text/javascript" src="./styles/bootlike/template/forum_fn.js?assets_version=42"></script>
+<script type="text/javascript" src="./styles/bootlike/template/ajax.js?assets_version=42"></script>
+<script type="text/javascript" src="./styles/bootlike/template/bootstrap.min.js?assets_version=42"></script>
+</body>
+</html>

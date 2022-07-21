@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>AoS Protocol Documentation | This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="AoS Protocol Documentation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo" />
+<meta property="og:description" content="This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo" />
+<link rel="canonical" href="http://www.piqueserver.org/aosprotocol/" />
+<meta property="og:url" content="http://www.piqueserver.org/aosprotocol/" />
+<meta property="og:site_name" content="AoS Protocol Documentation" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="AoS Protocol Documentation" />
+<script type="application/ld+json">
+{"headline":"AoS Protocol Documentation","description":"This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo","url":"http://www.piqueserver.org/aosprotocol/","@type":"WebSite","name":"AoS Protocol Documentation","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/aosprotocol/assets/css/style.css?v=c1ad669e063a5f7ac7649d43d588fb4e54c7dacf">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/aosprotocol/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://www.piqueserver.org/aosprotocol/">AoS Protocol Documentation</a></h1>
+
+        
+
+        <p>This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo
+</p>
+
+        
+        <p class="view"><a href="https://github.com/piqueserver/aosprotocol">View the Project on GitHub <small>piqueserver/aosprotocol</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <p>This page documents the networking Protocol of Ace of Spades 0.75, as well as
+the extensions made by the community.</p>
+
+<h1 id="overview">Overview</h1>
+<p><a href="http://buildandshoot.com/">Ace of Spades</a> uses the <a href="http://enet.bespin.org/Features.html">ENet networking
+library</a> for all server-client
+communication. The initial source for the protocol information was the original
+<a href="http://code.google.com/p/pyspades/">pyspades</a> source code, for which the
+source for 1.0 was not released. Nonetheless, the 1.0 alpha client has been
+reverse engineered to document the protocol.</p>
+
+<h2 id="versions">Versions</h2>
+
+<ul>
+  <li><a href="protocol075.html">0.75 (and 0.76) documentation</a></li>
+  <li><a href="protocol100a1.html">1.0 alpha documentation</a></li>
+</ul>
+
+<h2 id="extensions">Extensions</h2>
+
+<p>The 0.75 protocol supports extensions, which allow adding new packets as well as
+querying the support for client and server functionality.</p>
+
+<h3 id="extensions-providing-packets">Extensions providing packets</h3>
+
+<p>Packetful extensions are extensions that can be used to send packets. Each
+extension has 256 packet types reserved for itself. This is useful for adding
+functionality that requires sending additional information from or to the client.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="packetless-extensions">Packetless Extensions</h3>
+
+<p>Packetless extensions are extensions that can not send any packets. This is useful
+for signalling support for additional values in or certain behaviours related to
+existing packets.</p>
+
+<p>Packetless extensions exist as an artefact of the implementation of extensions.
+As the space reserved for extension packets is limited, values above 192 do not
+have any packet types left.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>192</td>
+      <td>Player Limit</td>
+      <td>Support for up to 256 players</td>
+      <td>TODO</td>
+    </tr>
+    <tr>
+      <td>193</td>
+      <td>Message Types</td>
+      <td>Additional message types such as warnings and satuses</td>
+      <td>TODO <a href="https://github.com/piqueserver/aosprotocol/issues/14">#14</a></td>
+    </tr>
+    <tr>
+      <td>194</td>
+      <td>Kick Reason</td>
+      <td>Repurposes the chat to send a disconnect reason text</td>
+      <td>TODO</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="implementers">Implementers</h3>
+<ul>
+  <li><a href="https://github.com/yvt/openspades">OpenSpades</a></li>
+  <li><a href="https://github.com/piqueserver/piqueserver">piqueserver</a></li>
+  <li><a href="https://github.com/xtreme8000/BetterSpades">BetterSpades</a></li>
+</ul>
+
+<p>Links to the respective projects pages that detail the extensions evailable in
+each version should be linked here.</p>
+
+<h2 id="other-protocols">Other Protocols</h2>
+
+<ul>
+  <li><a href="protocolmaster.html">Master Server Protocol</a></li>
+  <li><a href="protocolping.html">Ping Protocol</a></li>
+</ul>
+
+<h1 id="other-resources">Other Resources</h1>
+<ul>
+  <li><a href="https://web.archive.org/web/20100102023608/http://mystaddict.tlayeh.com/Computer%20Camp/Slab6/slab6.txt">KVX File Format Specification</a> - An archive of the mirror of the readme for Slab6 which contains the .kvx file format, the format that the AoS model format is based on</li>
+  <li><a href="mapformat.html">VXL File Format Specification</a> - A description of the .vxl file format, the format used for AoS maps<br />(<a href="http://silverspaceship.com/aosmap/aos_file_format.html">original</a>, <a href="/aosprotocol/aos_file_format.html">mirror</a>)</li>
+</ul>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/piqueserver">piqueserver</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/aosprotocol/assets/js/scale.fix.js"></script>
+  </body>
+</html>

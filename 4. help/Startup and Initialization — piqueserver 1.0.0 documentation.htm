@@ -1,0 +1,450 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Startup and Initialization &mdash; piqueserver 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Guide" href="release-guide.html" />
+    <link rel="prev" title="Architecture" href="architecture.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2022-06-17T14:17:32Z", "builder": "sphinx", "canonical_url": null, "commit": "b10c3819", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "startup-and-initialization", "programming_language": "py", "project": "piqueserver", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "latest"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="/_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> piqueserver
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administrator Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuring Piqueserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported-python-environments.html">Supported Python environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included-scripts.html">Included Piqueserver Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included-gamemodes.html">Included Game Modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-line.html">Command line arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Running Piqueserver with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="systemd-install-setup.html">Example Linux Setup with Systemd</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Resources</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="porting.html">Porting scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing-developer.html">Contributing (developer)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Startup and Initialization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#server-initialization">Server Initialization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#config-loading">Config loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-initialization">Module initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#script-loading">Script Loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#protocol-initialization">Protocol Initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config-validation">Config Validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#event-loop-startup">Event Loop Startup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map-loading">Map Loading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#map-change">Map Change</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#game-mode-initialization">Game Mode Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#player-lifecycle">Player Lifecycle</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#connection-start">Connection Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#map-transfer">Map Transfer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limbo">Limbo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#joined">Joined</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spawned">Spawned</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dead">Dead</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release-guide.html">Release Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="piqueserver.html">piqueserver package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyspades.html">pyspades package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing, Reporting Bugs and Requesting Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-ports.html">Network ports list (useful for firewall configuration)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyspades-forks-nota-list.html">A list of somewhat relevant pyspades forks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">piqueserver</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Startup and Initialization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/piqueserver/piqueserver/blob/master/doc/startup-and-initialization.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="startup-and-initialization">
+<h1>Startup and Initialization<a class="headerlink" href="#startup-and-initialization" title="Permalink to this headline">¶</a></h1>
+<p>Startup and initialization of the server is currently poorly defined. The
+phases are roughly as follows:</p>
+<div class="section" id="server-initialization">
+<h2>Server Initialization<a class="headerlink" href="#server-initialization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="config-loading">
+<h3>Config loading<a class="headerlink" href="#config-loading" title="Permalink to this headline">¶</a></h3>
+<p>The config and command-line arguments are loaded first, because they are
+required to proceed further.</p>
+</div>
+<div class="section" id="module-initialization">
+<h3>Module initialization<a class="headerlink" href="#module-initialization" title="Permalink to this headline">¶</a></h3>
+<p>The asyncio and twisted reactors are initialized. The files defining the game
+logic in <code class="docutils literal notranslate"><span class="pre">piqueserver/</span></code> and <code class="docutils literal notranslate"><span class="pre">pyspades/</span></code> are imported via
+<a class="reference internal" href="piqueserver.html#module-piqueserver.server" title="piqueserver.server"><code class="xref py py-obj docutils literal notranslate"><span class="pre">piqueserver.server</span></code></a>.</p>
+</div>
+<div class="section" id="script-loading">
+<h3>Script Loading<a class="headerlink" href="#script-loading" title="Permalink to this headline">¶</a></h3>
+<p>The way the script extension system works means that scripts can only be loaded
+before the two main classes, <code class="docutils literal notranslate"><span class="pre">Connection</span></code> and <code class="docutils literal notranslate"><span class="pre">Protocol</span></code>, are instantiated.</p>
+<p>In this phase, the scripts defined in the config are loaded. This consists of
+four sub-phases:</p>
+<ol class="arabic simple">
+<li>All scripts defined under <code class="docutils literal notranslate"><span class="pre">scripts</span></code> in the config are loaded, either from
+the config directory, or from <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.path" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sys.path</span></code></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">apply_script</span></code> is called on all scripts, in the order that they are
+declared in the config.</li>
+<li>If the game mode is not <code class="docutils literal notranslate"><span class="pre">&quot;ctf&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;tc&quot;</span></code> for which the logic is
+built-in, the game mode is imported as a script.</li>
+<li><code class="docutils literal notranslate"><span class="pre">apply_script</span></code> is called on the game mode script</li>
+</ol>
+</div>
+<div class="section" id="protocol-initialization">
+<h3>Protocol Initialization<a class="headerlink" href="#protocol-initialization" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Protocol</span></code> class created in the previous step is instantiated, calling
+it’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method. This does the following:</p>
+<ul class="simple">
+<li>Configure logging</li>
+<li>Read configuration such as map rotation, team names, time limits, win
+conditions</li>
+<li>Load the ban list</li>
+<li>Import and initialize auxilliary functionality like SSH, status server,
+banpublish/bansubscribe, command console.</li>
+<li>Initialize user configuration</li>
+<li>Resolve the filenames of the map rotation</li>
+<li>Create the <code class="docutils literal notranslate"><span class="pre">enet.Host</span></code> object, listening on the socket.</li>
+<li>Create the <code class="docutils literal notranslate"><span class="pre">Team</span></code> and <code class="docutils literal notranslate"><span class="pre">World</span></code> objects.</li>
+<li>Call <code class="docutils literal notranslate"><span class="pre">protocol.on_advance(map_name)</span></code> with the name of the map that is about
+to be loaded.</li>
+<li>Schedule future tasks such as the update check, ban vaccum, map loading,
+annoucements, game end, update loop and master server connection.</li>
+</ul>
+</div>
+<div class="section" id="config-validation">
+<h3>Config Validation<a class="headerlink" href="#config-validation" title="Permalink to this headline">¶</a></h3>
+<p>The configuration is validated for any errors or unused keys.</p>
+</div>
+<div class="section" id="event-loop-startup">
+<h3>Event Loop Startup<a class="headerlink" href="#event-loop-startup" title="Permalink to this headline">¶</a></h3>
+<p>Control is passed to the Twisted/AsyncIO event loop, which drives everything
+from here on out.</p>
+</div>
+<div class="section" id="map-loading">
+<h3>Map Loading<a class="headerlink" href="#map-loading" title="Permalink to this headline">¶</a></h3>
+<p>The map is loaded or generated in a background thread. This is done to prevent
+connections from timing out on slow hardware.</p>
+<p>Once complete, <code class="docutils literal notranslate"><span class="pre">protocol.on_map_change</span></code>, and <code class="docutils literal notranslate"><span class="pre">Team.initialize()</span></code> are
+called.</p>
+</div>
+</div>
+<div class="section" id="map-change">
+<h2>Map Change<a class="headerlink" href="#map-change" title="Permalink to this headline">¶</a></h2>
+<p>Map change is triggered by <code class="docutils literal notranslate"><span class="pre">protocol.advance_rotation</span></code></p>
+<p>This:</p>
+<ol class="arabic simple">
+<li>Calls <code class="docutils literal notranslate"><span class="pre">protocol.on_advance</span></code> with the next map.</li>
+<li>If a message was specified, print it and wait 10 seconds.</li>
+<li>Load or generate the next map.</li>
+<li>Call <code class="docutils literal notranslate"><span class="pre">protocol.on_map_leave</span></code></li>
+<li>Call <code class="docutils literal notranslate"><span class="pre">map_info.on_map_leave</span></code></li>
+<li>Replace the loaded map with the new one.</li>
+<li>Call <code class="docutils literal notranslate"><span class="pre">Team.initialize</span></code></li>
+</ol>
+</div>
+<div class="section" id="game-mode-initialization">
+<h2>Game Mode Initialization<a class="headerlink" href="#game-mode-initialization" title="Permalink to this headline">¶</a></h2>
+<p>Games are defined by the game mode. They usually represent a period of time
+where two teams compete for points and end with one team winning or losing, or
+some other condition such as a time limit being hit.</p>
+<p>There is currently no hook for when the game starts. However, existing modes
+assume it starts with the <code class="docutils literal notranslate"><span class="pre">on_map_change</span></code> call.</p>
+<p>When a game ends, the game mode will call <code class="docutils literal notranslate"><span class="pre">on_game_end</span></code> to notify any other
+scripts and possibly trigger a map change.</p>
+</div>
+<div class="section" id="player-lifecycle">
+<h2>Player Lifecycle<a class="headerlink" href="#player-lifecycle" title="Permalink to this headline">¶</a></h2>
+<p>Players join and play the game in a number of phases and states:</p>
+<div class="section" id="connection-start">
+<h3>Connection Start<a class="headerlink" href="#connection-start" title="Permalink to this headline">¶</a></h3>
+<p>An ENet connection handshake is performed. <code class="docutils literal notranslate"><span class="pre">protocol.on_connect</span></code> is called
+once complete.</p>
+<p>This creates a new <code class="docutils literal notranslate"><span class="pre">Connection</span></code> object, on which <code class="docutils literal notranslate"><span class="pre">connection.on_connect</span></code> is
+called. This decides if the player should be allowed to join based on
+information such as the player count, IP or protocol version.</p>
+</div>
+<div class="section" id="map-transfer">
+<h3>Map Transfer<a class="headerlink" href="#map-transfer" title="Permalink to this headline">¶</a></h3>
+<p>The map is generated and sent to the player. A snapshot of current player state
+is saved, on top of which changes occurring during map transfer will be
+layered. A handshake is started to identify the client version and available
+protocol extensions.</p>
+<p>On map transfer completion, <code class="docutils literal notranslate"><span class="pre">connection.on_join</span></code> will be called.</p>
+</div>
+<div class="section" id="limbo">
+<h3>Limbo<a class="headerlink" href="#limbo" title="Permalink to this headline">¶</a></h3>
+<p>After map transfer, players are in the “Limbo” state. They are in this state
+until the client sends an <code class="xref py py-obj docutils literal notranslate"><span class="pre">ExistingPlayer</span></code> packet containing the chosen name
+and team ID.</p>
+</div>
+<div class="section" id="joined">
+<h3>Joined<a class="headerlink" href="#joined" title="Permalink to this headline">¶</a></h3>
+<p>Once a team is selected, <code class="docutils literal notranslate"><span class="pre">connection.on_team_join</span></code> is called to validate the
+team choice. <code class="docutils literal notranslate"><span class="pre">connection.on_login</span></code> is then called to validate the chosen
+name.</p>
+</div>
+<div class="section" id="spawned">
+<h3>Spawned<a class="headerlink" href="#spawned" title="Permalink to this headline">¶</a></h3>
+<p>When a player is about to be spawned, <code class="docutils literal notranslate"><span class="pre">connection.on_spawn_location</span></code> is
+called to allow overriding the position. <code class="docutils literal notranslate"><span class="pre">connection.on_spawn</span></code> is called when
+the spawn is performed.</p>
+</div>
+<div class="section" id="dead">
+<h3>Dead<a class="headerlink" href="#dead" title="Permalink to this headline">¶</a></h3>
+<p>When a player dies, <code class="xref py py-obj docutils literal notranslate"><span class="pre">connection.on_kill</span></code> is called.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="release-guide.html" class="btn btn-neutral float-right" title="Release Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="architecture.html" class="btn btn-neutral float-left" title="Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, piqueserver dev team
+      
+        <span class="commit">
+          Revision <code>b10c3819</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: latest
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//docs.piqueserver.org/_/downloads/en/latest/htmlzip/">html</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/piqueserver/?fromdocs=piqueserver">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/piqueserver/?fromdocs=piqueserver">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

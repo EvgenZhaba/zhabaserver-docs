@@ -1,0 +1,2940 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>AoS Protocol Documentation | This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="AoS Protocol Documentation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo" />
+<meta property="og:description" content="This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo" />
+<link rel="canonical" href="http://www.piqueserver.org/aosprotocol/protocol075.html" />
+<meta property="og:url" content="http://www.piqueserver.org/aosprotocol/protocol075.html" />
+<meta property="og:site_name" content="AoS Protocol Documentation" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="AoS Protocol Documentation" />
+<script type="application/ld+json">
+{"headline":"AoS Protocol Documentation","description":"This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo","url":"http://www.piqueserver.org/aosprotocol/protocol075.html","@type":"WebPage","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/aosprotocol/assets/css/style.css?v=c1ad669e063a5f7ac7649d43d588fb4e54c7dacf">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/aosprotocol/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://www.piqueserver.org/aosprotocol/">AoS Protocol Documentation</a></h1>
+
+        
+
+        <p>This site documents the AoS protocol as well as the extensions that have and will been made to it. If you want to propose changes to the protocol, open an issue or file a PR against this repo
+</p>
+
+        
+        <p class="view"><a href="https://github.com/piqueserver/aosprotocol">View the Project on GitHub <small>piqueserver/aosprotocol</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <p>This page documents Ace of Spades 0.75, the last fully released version of Ace of Spades classic, and 0.76, the last publically available version of Ace of Spades Classic.</p>
+
+<p>Except where otherwise noted, this document applies to .75, the only
+commonly played version.</p>
+
+<h1 id="connection">Connection</h1>
+
+<p>When you connect, you must send a version number as the initial data.</p>
+
+<p>Following that a client needs to send an Existing Player data packet to send
+its own name, team etc.</p>
+
+<p>If the client does not send an Existing Player packet first, but any other
+packet, then the server closes the connection and seems to temporarily ban the
+player.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>AoS version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>3</td>
+      <td>0.75</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.76</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Send this magic number as part of the <code class="language-plaintext highlighter-rouge">enet_host_connect(ENetHost, ENetAddress,
+channels, int)</code> function</p>
+
+<h2 id="disconnect-reasons">Disconnect Reasons</h2>
+
+<p>Whenever the connection is closed by the server, there is a reason supplied to
+the client in the event’s data (event.data).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Reason</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Banned</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>IP connection limit exceded?</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Wrong protocol version</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Server full</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Kicked</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="about-coordinates">About Coordinates</h2>
+
+<p>In Ace of Spades the up-down axis is Z and it is inverted. This means 63 is
+water level and 0 is the highest point on a map.</p>
+
+<h1 id="packets">Packets</h1>
+
+<p>All packets start with an unsigned byte to specify their type, followed by the
+data for that type of packet. The size given for each packet below includes
+this byte.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ul>
+  <li><a href="#position-data">Position Data</a></li>
+  <li><a href="#orientation-data">Orientation Data</a></li>
+  <li><a href="#world-update-075">World Update (0.75)</a></li>
+  <li><a href="#world-update-076">World Update (0.76)</a></li>
+  <li><a href="#input-data">Input Data</a></li>
+  <li><a href="#weapon-input">Weapon Input</a></li>
+  <li><a href="#hit-packet">Hit Packet</a></li>
+  <li><a href="#set-hp">Set HP</a></li>
+  <li><a href="#grenade-packet">Grenade Packet</a></li>
+  <li><a href="#set-tool">Set Tool</a></li>
+  <li><a href="#set-colour">Set Colour</a></li>
+  <li><a href="#existing-player">Existing Player</a></li>
+  <li><a href="#short-player-data">Short Player Data</a></li>
+  <li><a href="#move-object">Move Object</a></li>
+  <li><a href="#create-player">Create Player</a></li>
+  <li><a href="#block-action">Block Action</a></li>
+  <li><a href="#block-line">Block Line</a></li>
+  <li><a href="#ctf-state">CTF State</a></li>
+  <li><a href="#tc-state">TC State</a></li>
+  <li><a href="#state-data">State Data</a></li>
+  <li><a href="#kill-action">Kill Action</a></li>
+  <li><a href="#chat-message">Chat Message</a></li>
+  <li><a href="#map-start-075">Map Start (0.75)</a></li>
+  <li><a href="#map-start-076">Map Start (0.76)</a></li>
+  <li><a href="#map-chunk">Map Chunk</a></li>
+  <li><a href="#player-left">Player Left</a></li>
+  <li><a href="#territory-capture">Territory Capture</a></li>
+  <li><a href="#progress-bar">Progress Bar</a></li>
+  <li><a href="#intel-capture">Intel Capture</a></li>
+  <li><a href="#intel-pickup">Intel Pickup</a></li>
+  <li><a href="#intel-drop">Intel Drop</a></li>
+  <li><a href="#restock">Restock</a></li>
+  <li><a href="#fog-colour">Fog Colour</a></li>
+  <li><a href="#weapon-reload">Weapon Reload</a></li>
+  <li><a href="#change-team">Change Team</a></li>
+  <li><a href="#change-weapon">Change Weapon</a></li>
+  <li><a href="#map-cached">Map Cached</a></li>
+  <li><a href="#powerthirst-edition">Powerthirst Edition</a></li>
+  <li><a href="#map-start-pt">Map Start (PT)</a></li>
+  <li><a href="#map-chunk-pt">Map Chunk (PT)</a></li>
+  <li><a href="#script-begin-pt">Script Begin (PT)</a></li>
+  <li><a href="#script-chunk-pt">Script Chunk (PT)</a></li>
+  <li><a href="#script-end-pt">Script End (PT)</a></li>
+  <li><a href="#script-call-pt">Script Call (PT)</a></li>
+  <li><a href="#script-parameters">Script Parameters</a></li>
+</ul>
+
+<h2 id="data-types">Data types</h2>
+
+<p>Generally, all fields in the Protocol are Low Endian if not specified.</p>
+
+<p>The following shorthands are used in this document:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">Shorthand</th>
+      <th>details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">Byte</td>
+      <td>8 bits of arbitrary data. Usually accompanied by a note</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">UByte</td>
+      <td>Unisgned 8 bit number</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">LE Float</td>
+      <td>32bit IEEE float</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">LE Uint</td>
+      <td>32bit unsigned integer</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">CP437 String</td>
+      <td>String encoded with CP437. Usually fixed-length.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="position-data">Position Data</h2>
+<p><code class="language-plaintext highlighter-rouge">Client &lt;-&gt; Server</code></p>
+
+<p>This packet is used to set the players position.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID:</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>13 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">x</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: right">y</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: right">z</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="orientation-data">Orientation Data</h2>
+<p>This packet is used to set the players orientation.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>13 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">x</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: right">y</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td style="text-align: right">z</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="world-update-075">World Update (0.75)</h2>
+<p>Updates position and orientation of all players. Always sends data for 32
+players, with empty slots being all 0 (position: [0,0,0], orientation:
+[0,0,0]).</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>13 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-1">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>players positions and orientations</td>
+      <td>Array[32] of Player Position Data</td>
+      <td> </td>
+      <td>See below table for data</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="player-position-data">‘Player Position Data’</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Total Size:</td>
+      <td>769 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-2">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>0 for non-players</td>
+    </tr>
+    <tr>
+      <td>y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>0 for non-players</td>
+    </tr>
+    <tr>
+      <td>z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>0 for non-players</td>
+    </tr>
+    <tr>
+      <td>x orientation</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>0 for non-players</td>
+    </tr>
+    <tr>
+      <td>y orientation</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>0 for non-players</td>
+    </tr>
+    <tr>
+      <td>z orientation</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>0 for non-players</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="world-update-076">World Update (0.76)</h2>
+<p>Updates position and orientation of all players. Unlike 0.75, this only sends
+information for the necessary players.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>1 + 25n bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-3">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>players positions and orientations</td>
+      <td>Array[] of Player Position Data, variable size</td>
+      <td> </td>
+      <td>See below table for data</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="player-position-data-1">‘Player Position Data’</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Total Size:</td>
+      <td>24 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-4">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>x orientation</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y orientation</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z orientation</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="input-data">Input Data</h2>
+<p>Contains the key-states of a player, packed into a byte.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>3 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-5">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>key states</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>Each bit in the byte represents a key, as defined in the table below.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="key-states">Key States:</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Placement</th>
+      <th>Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>up</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>down</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>left</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>right</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>jump</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>crouch</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>sneak</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>sprint</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="weapon-input">Weapon Input</h2>
+<p>Contains the weapon input state(?).</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>3 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>weapon input</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>The lowest bit represents the primary fire, the second lowest represents the secondary fire.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="hit-packet">Hit Packet</h2>
+<h4 id="client-to-server">Client-to-Server</h4>
+
+<p>Sent by the client when a hit is registered. The server should verify that this
+is possible to prevent abuse (such as hitting without shooting, facing the
+wrong way, etc).</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>3 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-6">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID hit</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>hit type</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>See values in table below</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="hit-types">Hit Types</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>torso</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>head</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>arms</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>legs</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>melee</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="set-hp">Set HP</h2>
+<h4 id="server-to-client">Server-to-Client</h4>
+
+<p>Sent to the client when hurt.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>15 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HP</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>0 = fall, 1 = weapon</td>
+    </tr>
+    <tr>
+      <td>source x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>source y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>source z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="grenade-packet">Grenade Packet</h2>
+<p>Spawns a grenade with the given information.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>30 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-7">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>fuse length</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>x velocity</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y velocity</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z velocity</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="set-tool">Set Tool</h2>
+<p>Sets a player’s currently equipped tool/weapon.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>3 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-8">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>tool</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>Tool values are listed below</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="tools">Tools</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>spade</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>block</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>gun</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>grenade</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="set-colour">Set Colour</h2>
+<p>Set the colour of a player’s held block.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>5 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>blue</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>green</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>red</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="existing-player">Existing Player</h2>
+<p>Set player’s team, weapon, etc.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>depends</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-9">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team</td>
+      <td>Byte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>weapon</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>held item</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>kills</td>
+      <td>LE UInt</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>blue</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>green</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>red</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>name</td>
+      <td><a href="http://en.wikipedia.org/wiki/Code_page_437">CP437</a> String</td>
+      <td><code class="language-plaintext highlighter-rouge">Deuce</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="short-player-data">Short Player Data</h2>
+<p>Like Existing Player, but with less information.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>4 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-10">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team</td>
+      <td>Byte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>weapon</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="move-object">Move Object</h2>
+<p>This packet is used to move various game objects like tents, intels and even grenades. When moving grenades in TC mode the voxlap client has a bug that changes grenades’ models to small tents.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>15 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-11">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>object id</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>2 = neutral</td>
+    </tr>
+    <tr>
+      <td>x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="create-player">Create Player</h2>
+<p>Send on respawn of a player.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>depends</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-12">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player id</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>weapon</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team</td>
+      <td>Byte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>name</td>
+      <td><a href="http://en.wikipedia.org/wiki/Code_page_437">CP437</a> String</td>
+      <td><code class="language-plaintext highlighter-rouge">Deuce</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="block-action">Block Action</h2>
+<p>Sent when a block is placed/destroyed.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>15 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-13">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player id</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>action type</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>See table below</td>
+    </tr>
+    <tr>
+      <td>x position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-14">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Type</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>build</td>
+      <td>places a block with the player’s selected color</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bullet and spade(left button) destroy</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>spade(right button) destroy</td>
+      <td>destroys 3 blocks, one above and below additionally</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>grenade destroy</td>
+      <td>destroys all blocks within an 3x3x3 area</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="block-line">Block Line</h2>
+<p>Create a line of blocks between 2 points. The block color is defined by the <code class="language-plaintext highlighter-rouge">Set Color</code> packet.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>26 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player id</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>start x position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>start y position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>start z position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>end x position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>end y position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>end z position</td>
+      <td>LE Int</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ctf-state">CTF State</h2>
+<p>Brief description.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>none</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>52 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-15">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>team 1 score</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 2 score</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>capture limit</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>intel flags</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>bits signal if teams have intel - bit 1 for team 1, bit 2 for team 2</td>
+    </tr>
+    <tr>
+      <td>team 1 intel location</td>
+      <td>Location Data</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>see below</td>
+    </tr>
+    <tr>
+      <td>team 2 intel location</td>
+      <td>Location Data</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>see below</td>
+    </tr>
+    <tr>
+      <td>team 1 base x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 1 base y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 1 base z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 2 base x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 2 base y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 2 base z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The intel location data is 12 bytes long. If the intel is being held, the first
+byte is a UByte with the id of the holding player, then the rest are padding.
+If the intel is on the ground (not being held), the data will hold three LE
+Floats with its x, y and z position.</p>
+
+<h4 id="fields-16">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Intel State</th>
+      <th>Field Name</th>
+      <th>Field Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Held</td>
+      <td>holding player id</td>
+      <td>UByte</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>padding</td>
+      <td>11 bytes</td>
+    </tr>
+    <tr>
+      <td>Dropped</td>
+      <td>intel x position</td>
+      <td>LE Float</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>intel y position</td>
+      <td>LE Float</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>intel z position</td>
+      <td>LE Float</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This packet is not a complete packet, as it is only sent after the initial
+data, where the gamemode is sent. It could be considered as part of that
+initial data packet, but as what’s sent varies greatly depending on the
+gamemode, it is documented separately.</p>
+
+<h2 id="tc-state">TC State</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>territory count</td>
+      <td>UByte</td>
+      <td>16</td>
+      <td>Maximum is 16 otherwise the client will crash with ‘Invalid memory access’</td>
+    </tr>
+    <tr>
+      <td>Array[] of territory data</td>
+      <td>LE Float, LE Float, LE Float, UByte</td>
+      <td> </td>
+      <td>See table below</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>This packet is not a complete packet, as it is only sent after the initial
+data, where the gamemode is sent. It could be considered as part of that
+initial data packet, but as what’s sent varies greatly depending on the
+gamemode, it is documented separately.</p>
+
+<h2 id="state-data">State Data</h2>
+<p><code class="language-plaintext highlighter-rouge">Server--&gt;Client</code></p>
+
+<p>Indicates that the map transfer is complete. Also informs the client of
+numerous game parameters. Be aware that CTFState or TCState may be appended to
+the packet after the gamemode id portion.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>52 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-17">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player id</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>fog (blue)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>fog (green)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>fog (red)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 1 color (blue)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 1 color (green)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 1 color (red)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 2 color (blue)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 2 color (green)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team 2 color (red)</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>team name 1</td>
+      <td>CP437 String</td>
+      <td>Blue</td>
+      <td>Always 10 characters long</td>
+    </tr>
+    <tr>
+      <td>team name 2</td>
+      <td>CP437 String</td>
+      <td>Green</td>
+      <td>Always 10 characters long</td>
+    </tr>
+    <tr>
+      <td>gamemode id</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td>0 for CTF, 1 for TC</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="kill-action">Kill Action</h2>
+<h4 id="server-client">Server-&gt;Client</h4>
+
+<p>Notify the client of a player’s death.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>5 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td>12</td>
+      <td>Player that died</td>
+    </tr>
+    <tr>
+      <td>killer ID</td>
+      <td>UByte</td>
+      <td>8</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>kill type</td>
+      <td>UByte</td>
+      <td>0</td>
+      <td>See table below</td>
+    </tr>
+    <tr>
+      <td>respawn time</td>
+      <td>UByte</td>
+      <td>1</td>
+      <td>Seconds until respawn</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-18">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>WEAPON (body, limbs)</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>HEADSHOT</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>MELEE (spade)</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>GRENADE</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>FALL</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>TEAM_CHANGE</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>CLASS_CHANGE</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="chat-message">Chat Message</h2>
+<h4 id="two-way">Two-way</h4>
+
+<p>Reasonable limits must placed on length and frequency of chat messages.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>. bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player id</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Chat Type</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>See table below</td>
+    </tr>
+    <tr>
+      <td>Chat Message</td>
+      <td><a href="http://en.wikipedia.org/wiki/Code_page_437">CP437</a> String</td>
+      <td><code class="language-plaintext highlighter-rouge">"join /squad 1"</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-19">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Type</th>
+      <th>voxlap default color</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>CHAT_ALL</td>
+      <td>white</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>CHAT_TEAM</td>
+      <td>team color, black for spectator</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>CHAT_SYSTEM</td>
+      <td>red</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="map-start-075">Map Start (0.75)</h2>
+<h4 id="server-client-1">Server-&gt;Client</h4>
+
+<p>Sent when a client connects, or a map is advanced for already existing connections.</p>
+
+<p>Should be the first packet received when a client connects.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>5 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Map size</td>
+      <td>Uint32</td>
+      <td><code class="language-plaintext highlighter-rouge">4567</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="map-start-076">Map Start (0.76)</h2>
+<h4 id="server-client-2">Server-&gt;Client</h4>
+
+<p>Sent when a client connects, or a map is advanced for already existing connections.</p>
+
+<p>Should be the first packet received when a client connects.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>9+ bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-20">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Map size</td>
+      <td>Uint32</td>
+      <td><code class="language-plaintext highlighter-rouge">283839</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>CRC32</td>
+      <td>Uint32</td>
+      <td><code class="language-plaintext highlighter-rouge">0x4c7ebe43</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Map name</td>
+      <td><a href="http://en.wikipedia.org/wiki/Code_page_437">CP437</a> String</td>
+      <td><code class="language-plaintext highlighter-rouge">"pinpoint2"</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="map-chunk">Map Chunk</h2>
+<h4 id="server-client-3">Server-&gt;Client</h4>
+
+<p>Sent just after <strong>Map Start</strong>, repeatedly until the entire map is sent.</p>
+
+<p>Should always be the next sequence of packets after a <strong>Map Start</strong> packet.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>depends</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-21">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Map Data</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td><a href="http://en.wikipedia.org/wiki/DEFLATE">DEFLATE/zlib</a> encoded <a href="http://silverspaceship.com/aosmap/aos_file_format.html">AOS map data</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="player-left">Player Left</h2>
+<h4 id="server-protocol">Server-&gt;Protocol</h4>
+
+<p>Sent when a player disconnects.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>2 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-22">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="territory-capture">Territory Capture</h2>
+<h4 id="server-protocol-1">Server-&gt;Protocol</h4>
+
+<p>Sent when a player captures a Command Post in Territory Control mode.</p>
+
+<p>Captures have affects on the client.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>5 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-23">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>entity ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>The ID of the CP being captured</td>
+    </tr>
+    <tr>
+      <td>winning</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>(or losing)</td>
+    </tr>
+    <tr>
+      <td>state</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>team id</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="progress-bar">Progress Bar</h2>
+<h4 id="server-client-4">Server-&gt;Client</h4>
+
+<p>Display the TC progress bar.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>8 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-24">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>entity ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>The ID of the tent entity</td>
+    </tr>
+    <tr>
+      <td>capturing team ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>rate</td>
+      <td>Byte</td>
+      <td><code class="language-plaintext highlighter-rouge">2</code></td>
+      <td>Used by the client for interpolation, one per team member capturing (minus enemy team members). One rate unit is 5% of progress per second.</td>
+    </tr>
+    <tr>
+      <td>progress</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">0.5</code></td>
+      <td>In range [0,1]</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="intel-capture">Intel Capture</h2>
+<h4 id="server-protocol-2">Server-&gt;Protocol</h4>
+
+<p>Sent when a player captures the intel, which is determined by the server.</p>
+
+<p>Winning captures have affects on the client.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>3 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-25">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>winning</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>Was the winning capture</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="intel-pickup">Intel Pickup</h2>
+<h4 id="server-protocol-3">Server-&gt;Protocol</h4>
+
+<p>Sent when a player collects the intel, which is determined by the server.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>2 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-26">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="intel-drop">Intel Drop</h2>
+<h4 id="server-protocol-4">Server-&gt;Protocol</h4>
+
+<p>Sent when a player dropped the intel. This will update the intel position on the client.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>14 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-27">Fields</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Field Name</td>
+      <td>Field Type</td>
+      <td>Example</td>
+      <td>Notes</td>
+    </tr>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>ID of the player who dropped intel</td>
+    </tr>
+    <tr>
+      <td>x position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">32.0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>y position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">32.0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>z position</td>
+      <td>LE Float</td>
+      <td><code class="language-plaintext highlighter-rouge">32.0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="restock">Restock</h2>
+<h4 id="server-protocol-5">Server-&gt;Protocol</h4>
+
+<p>Id of the player who has been restocked.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>2 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-28">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>ID of the player who restocked</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="fog-colour">Fog Colour</h2>
+<h4 id="server-client-5">Server-&gt;Client</h4>
+
+<p>Set the colour of a player’s fog.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>27</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>5 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-29">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>fog color</td>
+      <td>UInt</td>
+      <td><code class="language-plaintext highlighter-rouge">0h00fefefe</code></td>
+      <td>BGRA encoded</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="weapon-reload">Weapon Reload</h2>
+<h4 id="clientserver-protocol">Client–&gt;Server-&gt;Protocol</h4>
+
+<p>Sent by the client when the player reloads their weapon, and relayed to other
+clients after protocol logic applied.</p>
+
+<p>This has no affect on animation, but is used to trigger sound effects on the
+other clients.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>4 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-30">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>Player who reloaded</td>
+    </tr>
+    <tr>
+      <td>clip ammo</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>reserve ammo</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="change-team">Change Team</h2>
+<h4 id="clientserverprotocolkill-action--create-player">Client–&gt;Server–&gt;Protocol–&gt;Kill Action &amp; Create Player</h4>
+
+<p>Sent by the client when the player changes team. Is not relayed to all clients
+directly, but instead uses <strong>Kill Action</strong>
+then <strong>Create Player</strong> to inform other
+clients of the team change.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>29</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>3 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-31">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>Player who changed team</td>
+    </tr>
+    <tr>
+      <td>Team ID</td>
+      <td>Byte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>See values in table below</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="team-ids">Team IDs</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">Value</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right">-1</td>
+      <td>spectator</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">0</td>
+      <td>blue</td>
+    </tr>
+    <tr>
+      <td style="text-align: right">1</td>
+      <td>green</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="change-weapon">Change Weapon</h2>
+<h4 id="clientserverprotocolkill-action--change-weapon">Client–&gt;Server–&gt;Protocol–&gt;Kill Action &amp; Change Weapon</h4>
+
+<p>Sent by the client when player changes weapon, and relayed to clients by server
+after <code class="language-plaintext highlighter-rouge">filter_visibility</code> logic is applied.</p>
+
+<p>Receiving clients will also be sent a preceding
+<strong>Kill Action</strong> to inform them the player
+has died both of which are sent as reliable packets.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>3 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>player ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>Player who’s changed weapon</td>
+    </tr>
+    <tr>
+      <td>Weapon ID</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td>See values in table below</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="weapon-id">Weapon ID</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>rifle</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>smg</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>shotgun</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="map-cached">Map Cached</h2>
+<p><code class="language-plaintext highlighter-rouge">Client-&gt;Server</code></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>2 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cached</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td><code class="language-plaintext highlighter-rouge">1</code> if cached, <code class="language-plaintext highlighter-rouge">0</code> otherwise</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="powerthirst-edition">Powerthirst Edition</h1>
+
+<p>This version adds 4 new packets, extends 2 packets, and duplicately maps 1 packet over another.</p>
+
+<p>The World Update packet has up to 64 fields now instead of 32.</p>
+
+<h2 id="map-start-pt">Map Start (PT)</h2>
+<h4 id="server-client-6">Server-&gt;Client</h4>
+
+<p>Sent when a client connects, or a map is advanced for already existing connections.</p>
+
+<p>Should be the first packet received when a client connects.</p>
+
+<p>The version must exist and be &gt;= 1 (and &lt;= the client’s Powerthirst proto
+version or otherwise the client will refuse to connect) to enable certain
+Powerthirst features such as long-name support.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>18</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Map size</td>
+      <td>Uint32</td>
+      <td><code class="language-plaintext highlighter-rouge">4567</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>PT version</td>
+      <td>UInt32</td>
+      <td><code class="language-plaintext highlighter-rouge">4</code></td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="map-chunk-pt">Map Chunk (PT)</h2>
+<h4 id="server-client-7">Server-&gt;Client</h4>
+
+<p>This is just a remapping of the <a href="#map-chunk">Map Chunk</a> packet to 2 packets back to stop vanilla clients from connecting.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>9 bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-32">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Map Data</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td><a href="http://en.wikipedia.org/wiki/DEFLATE">DEFLATE/zlib</a> encoded <a href="http://silverspaceship.com/aosmap/aos_file_format.html">AOS map data</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="script-begin-pt">Script Begin (PT)</h2>
+<h4 id="server-client-8">Server-&gt;Client</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>(varies) bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-33">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Script size</td>
+      <td>Uint32</td>
+      <td><code class="language-plaintext highlighter-rouge">4567</code></td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Module name</td>
+      <td><a href="http://en.wikipedia.org/wiki/Code_page_437">CP437</a> String</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="script-chunk-pt">Script Chunk (PT)</h2>
+<h4 id="server-client-9">Server-&gt;Client</h4>
+
+<p>This is just a remapping of the <a href="#map-chunk">Map_Chunk</a> packet to 2 packets back to stop vanilla clients from connecting.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>(varies) bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-34">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Script Data</td>
+      <td>UByte</td>
+      <td><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td><a href="http://en.wikipedia.org/wiki/DEFLATE">DEFLATE/zlib</a> encoded <a href="http://www.angelcode.com/angelscript/">AngelScript source code</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="script-end-pt">Script End (PT)</h2>
+<h4 id="server-client-10">Server-&gt;Client</h4>
+
+<p>Once this is sent, the script is loaded.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>33</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>(varies) bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-35">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Module name</td>
+      <td><a href="http://en.wikipedia.org/wiki/Code_page_437">CP437</a> String</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="script-call-pt">Script Call (PT)</h2>
+<h4 id="server-client-11">Server-&gt;Client</h4>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Packet ID</td>
+      <td>34</td>
+    </tr>
+    <tr>
+      <td>Total Size:</td>
+      <td>(varies) bytes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="fields-36">Fields</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field Name</th>
+      <th>Field Type</th>
+      <th>Example</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Function name</td>
+      <td>0-terminated <a href="http://en.wikipedia.org/wiki/Code_page_437">CP437</a> String</td>
+      <td><code class="language-plaintext highlighter-rouge">void main()</code></td>
+      <td>Must be an AngelScript prototype, not just the name itself</td>
+    </tr>
+    <tr>
+      <td>Parameters</td>
+      <td>See below</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="script-parameters">Script Parameters</h3>
+<p>Start from after the 0-byte in the Function name string. Then, loop through these IDs:</p>
+
+<ul>
+  <li>0: <code class="language-plaintext highlighter-rouge">ASP_TERM</code>: End of parameter list.</li>
+  <li>1: <code class="language-plaintext highlighter-rouge">ASP_INT</code>: Read a 32-bit little-endian int. AngelScript type: “int”</li>
+  <li>2: <code class="language-plaintext highlighter-rouge">ASP_FLOAT</code>: Read a 32-bit little-endian single-precision float. AngelScript type: “float”</li>
+  <li>3: <code class="language-plaintext highlighter-rouge">ASP_PSTRING</code>: Read an 8-bit uint, then read that many bytes as a string (do NOT add in a terminating NUL). AngelScript type: “const string &amp;in”</li>
+</ul>
+
+<h1 id="other-resources">Other Resources</h1>
+<ul>
+  <li><a href="https://github.com/piqueserver/aosprotocol/edit/master/index.md">KVX File Format Specification</a> - A mirror of the readme for Slab6 which contains the .kvx file format, the format that the AoS model format is based on</li>
+  <li><a href="http://silverspaceship.com/aosmap/aos_file_format.html">VXL File Format Specification</a> - A description of the .vxl file format, the format used for AoS maps</li>
+</ul>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="https://github.com/piqueserver">piqueserver</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/aosprotocol/assets/js/scale.fix.js"></script>
+  </body>
+</html>

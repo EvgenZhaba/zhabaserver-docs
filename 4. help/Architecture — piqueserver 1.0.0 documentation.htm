@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Architecture &mdash; piqueserver 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Startup and Initialization" href="startup-and-initialization.html" />
+    <link rel="prev" title="Contributing (developer)" href="contributing-developer.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2022-06-17T14:17:30Z", "builder": "sphinx", "canonical_url": null, "commit": "b10c3819", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "architecture", "programming_language": "py", "project": "piqueserver", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "latest"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="/_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> piqueserver
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Administrator Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuring Piqueserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="supported-python-environments.html">Supported Python environments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included-scripts.html">Included Piqueserver Scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="included-gamemodes.html">Included Game Modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-line.html">Command line arguments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Running Piqueserver with Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="systemd-install-setup.html">Example Linux Setup with Systemd</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developer Resources</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="porting.html">Porting scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing-developer.html">Contributing (developer)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extension-scripts">Extension Scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="startup-and-initialization.html">Startup and Initialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release-guide.html">Release Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="piqueserver.html">piqueserver package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyspades.html">pyspades package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Miscellaneous</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing, Reporting Bugs and Requesting Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-ports.html">Network ports list (useful for firewall configuration)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyspades-forks-nota-list.html">A list of somewhat relevant pyspades forks</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">piqueserver</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/piqueserver/piqueserver/blob/master/doc/architecture.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The piqueserver codebase is made up out of two main packages: <a class="reference internal" href="pyspades.html#module-pyspades" title="pyspades"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyspades</span></code></a> and
+<a class="reference internal" href="piqueserver.html#module-piqueserver" title="piqueserver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">piqueserver</span></code></a>. The <a class="reference internal" href="piqueserver.html#module-piqueserver" title="piqueserver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">piqueserver</span></code></a> module used to be named <code class="docutils literal notranslate"><span class="pre">feature_server</span></code>.
+The original developers wanted to make the pyspades a generic AoS protocol and
+server implementation which the <code class="docutils literal notranslate"><span class="pre">feature_server</span></code> module then subclassed and
+specialized.</p>
+<p>However, the unclear division and two locations quickly lead to a large mess,
+and it is currently not possible to know for certain which module exactly
+contains certain functionality. In general, this is the rule of thumb:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="pyspades.html#module-pyspades" title="pyspades"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyspades</span></code></a>: Anything that involves sending and receiving of packets and
+acting on those, keeping game state.</li>
+<li><a class="reference internal" href="piqueserver.html#module-piqueserver" title="piqueserver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">piqueserver</span></code></a>: Anything player-facing, for example commands,
+configuration, etc.</li>
+</ul>
+</div></blockquote>
+<p>Note however the numerous exceptions to this. For example, parts of the command
+logic are in <a class="reference internal" href="pyspades.html#module-pyspades" title="pyspades"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pyspades</span></code></a>, while a lot of server validation logic is in
+<a class="reference internal" href="piqueserver.html#module-piqueserver" title="piqueserver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">piqueserver</span></code></a></p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<p>There are currently two classes which contain the bulk of the logic.
+<code class="docutils literal notranslate"><span class="pre">Connection</span></code>, and <code class="docutils literal notranslate"><span class="pre">Protocol</span></code>. The <code class="docutils literal notranslate"><span class="pre">Connection</span></code> class does not actually
+represent a connection, it represents a player connected to the server and is
+contained in the <code class="docutils literal notranslate"><span class="pre">player.py</span></code> file in the relevant module. The <code class="docutils literal notranslate"><span class="pre">Protocol</span></code>
+object is similar, but represents the server and is in the <code class="docutils literal notranslate"><span class="pre">server.py</span></code> file.</p>
+<p>Many classes and modules have descriptions you can view in this
+documentations or in the files themselves.</p>
+</div>
+<div class="section" id="extension-scripts">
+<h2>Extension Scripts<a class="headerlink" href="#extension-scripts" title="Permalink to this headline">¶</a></h2>
+<p>Piqueserver supports extension scripts aka “scripts” that modify it’s behaviour.
+The mechanism used to implement these is pretty ugly.</p>
+<p>Each script defines an <code class="docutils literal notranslate"><span class="pre">apply_script(protocol,</span> <span class="pre">connection,</span> <span class="pre">config)</span></code> function.
+This function is called on script initialization with the protocol class, connection
+class and the config dict. Scripts are intended to then dynamically subclass the
+protocol and connection classes and return those, overriding methods where
+needed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">apply_script</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">ScriptNameProtocol</span><span class="p">(</span><span class="n">protocol</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">my_overridden_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+            <span class="o">...</span>
+            <span class="k">return</span> <span class="n">protocol</span><span class="o">.</span><span class="n">my_overridden_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+        <span class="o">...</span>
+
+    <span class="k">class</span> <span class="nc">ScriptNameConnection</span><span class="p">(</span><span class="n">connection</span><span class="p">):</span>
+        <span class="o">...</span>
+
+    <span class="k">return</span> <span class="n">ScriptNameProtocol</span><span class="p">,</span> <span class="n">ScriptNameConnection</span>
+</pre></div>
+</div>
+<p>The application of these scripts is performed in a loop, <code class="docutils literal notranslate"><span class="pre">apply_script</span></code> always being
+called with the classes returned by the last invocation. This way, the final class
+created inherits from all extension classes.</p>
+<p>This is a terrible idea for a number of reasons, but just the way things work currently:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Extensions must meddle with the internals of piqueserver. This means that scripts
+are likely to break whenever any internals are changed, making substatial
+changes harder.</li>
+<li>It is impossible to load or unload scripts after starting the server</li>
+<li>There is no clear and defined API for scripts. This makes writing scripts unecessarily
+difficult and also increases breakage.</li>
+<li>Debugging this is very hard</li>
+</ul>
+</div></blockquote>
+<p>Game mode scripts are identical to regular extension scripts in functionality. However,
+they are required to define an attribute named <code class="docutils literal notranslate"><span class="pre">game_mode</span></code> on the <code class="docutils literal notranslate"><span class="pre">Protocol</span></code> class
+that describes the base game mode, <code class="docutils literal notranslate"><span class="pre">CTF_MODE</span></code> or <code class="docutils literal notranslate"><span class="pre">TC_MODE</span></code>. This is required because
+at a protocol level, AoS currently only supports those two game modes. Any other game
+modes must be emulated using the functionality provided by these two game modes.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="startup-and-initialization.html" class="btn btn-neutral float-right" title="Startup and Initialization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="contributing-developer.html" class="btn btn-neutral float-left" title="Contributing (developer)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, piqueserver dev team
+      
+        <span class="commit">
+          Revision <code>b10c3819</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: latest
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//docs.piqueserver.org/_/downloads/en/latest/htmlzip/">html</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/piqueserver/?fromdocs=piqueserver">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/piqueserver/?fromdocs=piqueserver">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>
