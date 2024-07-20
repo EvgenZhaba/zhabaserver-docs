@@ -1,5 +1,5 @@
 # **Информация по игре Ace of Spades 0.75 и сервере zhabaserver**
-v0.4.4  
+v0.5.0  
 by EvgenZhaba
 ____
 
@@ -576,18 +576,7 @@ extensions = { 'water_damage' : 2,
 `\piqueserver\scripts\disco.py` :star:  
 Дискотека! Меняет цвет тумана. Для администраторов.  
 **/disco**  
-Переключить режим дискотеки.  
-
-`\piqueserver\scripts\votekick.py` :star:  
-Голосование за кик игрока.  
-**/votekick \<player\> \<reason\>**  
-Начать голосование за кик этого игрока по заданной причине.  
-**/y**  
-Согласиться с текущим голосованием.  
-**/togglevotekick [player]** *tvk*  
-Переключить возможность начать голосование для этого игрока. Без аргумента - для всех игроков. Для администраторов.  
-**/cancel**  
-Отменить текущее голосование. Для инициатора или администраторов.  
+Переключить режим дискотеки.   
 
 `\piqueserver\scripts\trusted.py` :star:  
 Позволяет выдавать доверие игрокам - доверенные игроки не могут быть кикнуты голосованием. Для администраторов.  
@@ -629,6 +618,18 @@ extensions = { 'water_damage' : 2,
 **/givestrike \<player\>**  
 Выдать этому игроку право вызвать удар с воздуха. Для администраторов.  
 
+`\piqueserver\scripts\analyze.py` :star:  
+Показывает детальную аналитику выстрелов игроков. В кого стреляет, расстояние, время с предыдущего выстрела.  
+**/analyze \<player\>** *an*  
+Переключить наблюдение за этим игроком.  
+
+`\piqueserver\scripts\daycycle.py` :star:   
+Меняет цвет тумана, имитируя день и ночь.  
+**/dayspeed \<speed\>**  
+Установить скорость смены дня и ночи. По умолчанию в 48 раз быстрее, чем в реальности. Без аргумента выведет текущее значение. Для администраторов.  
+**/daytime \<time\>**  
+Без аргумента - вывести текущее время. С аргументом - для администраторов - установить текущее время (в часах).  
+
 `\piqueserver\scripts\paint.py` :star:  
 Раскраска блоков. Когда выбран блок и нужный цвет, нажатие V окрашивает блок, на который смотришь.  
 **/paint \<player\>**  
@@ -643,7 +644,7 @@ extensions = { 'water_damage' : 2,
 Исправляет баг(фичу) броска гранаты с уменьшенным временем взрыва.   
 
 ### 3.2 Исправления
-Некоторые скрипты из piqueserver 1.0.0 содержали ошибки. Исправленные версии подключены как сторонние скрипты.
+Некоторые скрипты из piqueserver 1.2.0 содержали ошибки. Исправленные версии подключены как сторонние скрипты.
 
 `\zhabaserver\scripts\aimbot2_.py` :star:  
 Заменено parse на timeparse.  
@@ -653,22 +654,6 @@ extensions = { 'water_damage' : 2,
 **/hackinfo \<player\>**  
 Вывести точность этого игрока, соотношение убийств/смертей, сколько убийств в голову, сколько раз навёлся на голову противника с поворотом больше определённого угла (90 градусов). Для администраторов.  
 
-`\zhabaserver\scripts\analyze_.py` :star:  
-https://github.com/piqueserver/piqueserver/commit/133344db6a1146d1e4aadcaf921c4e60c11e677e  
-35 строка обновлена: "if player.player_id not in protocol.players:"  
-Показывает детальную аналитику выстрелов игроков. В кого стреляет, расстояние, время с предыдущего выстрела.  
-**/analyze \<player\>** *an*  
-Переключить наблюдение за этим игроком.  
-
-`\zhabaserver\scripts\daycycle_.py` :star:  
-https://github.com/piqueserver/piqueserver/commit/d78b63c72e634fe775eadbda8b6705c57b5d9063  
-Заменено start_time на daycycle_start_time - такая глобальная переменная уже была.  
-Меняет цвет тумана, имитируя день и ночь.  
-**/dayspeed \<speed\>**  
-Установить скорость смены дня и ночи. По умолчанию в 48 раз быстрее, чем в реальности. Без аргумента выведет текущее значение. Для администраторов.  
-**/daytime \<time\>**  
-Без аргумента - вывести текущее время. С аргументом - для администраторов - установить текущее время (в часах).  
-
 `\piqueserver\scripts\votemap_.py` :star:  
 Убрана функция lower(), из-за которой имя карты неправильно отображалось и соответственно вводилось - карта, в имени которой буквы разных регистров, не выбиралась. Также тут убран сломанный декоратор @player_only. Добавлена возможность выбора карты по её номеру в выводе votemap.  
 Голосование за выбор следующей карты.  
@@ -677,18 +662,22 @@ https://github.com/piqueserver/piqueserver/commit/d78b63c72e634fe775eadbda8b6705
 **/vote \<map name\>**  
 Проголосовать за эту карту. Вместо имени карты можно ввести её номер из votemap.  
 
-`\zhabaserver\scripts\bansbugfix.py` :star:  
-https://github.com/piqueserver/piqueserver/commit/0b95c7f276d32b843667fd760141964e87d7a427  
-https://github.com/piqueserver/piqueserver/commit/d0ee645609447b423ead69ca6a62d1d6929c0acc  
-Исправляет работоспособность банов.  
-
-`\zhabaserver\scripts\globalchatbugfix.py` :star:  
-Изменено определение функции: "def global_chat(connection, value):"  
-Исправляет работоспособность команды globalchat. 
-
 `\zhabaserver\scripts\playeronlybugfix.py` :star:  
 https://github.com/piqueserver/piqueserver/issues/610  
 Убирает сломанный декоратор @player_only  
+
+`\zhabaserver\scripts\votekickbugfix.py` :star:  
+https://github.com/piqueserver/piqueserver/blob/9cf7fd79a4840d2f75575b2c425d449b929f1d0a/piqueserver/scripts/votekick.py#L337  
+Заменяет на `self.ban(reason, votekick.ban_duration) # patched`  
+Голосование за бан на 15 минут игрока.  
+**/votekick \<player\> \<reason\>**  
+Начать голосование за бан на 15 минут этого игрока по заданной причине.  
+**/y**  
+Согласиться с текущим голосованием.  
+**/togglevotekick [player]** *tvk*  
+Переключить возможность начать голосование для этого игрока. Без аргумента - для всех игроков. Для администраторов.  
+**/cancel**  
+Отменить текущее голосование. Для инициатора или администраторов. 
 
 `\zhabaserver\scripts\revertrotation.py` :star:  
 Карты берутся из `protocol.config['rotation']`.  
@@ -729,6 +718,10 @@ https://github.com/piqueserver/piqueserver/issues/610
 `\zhabaserver\scripts\limitfog.py` :star:  
 в разработке  
 Изменяет механику - не отправляет игрокам информацию о местоположении врагов за пределами тумана (по умолчанию всем отправлялась инфа обо всех).  
+
+`\zhabaserver\scripts\mines.py` :star:  
+Мины!  
+При спавне даётся 1 мина, при входе в палатку запас пополняется до 5 мин. Ставить мины - ПКМ с гранатой в руке на блок. Враг проходит рядом с миной = взрыв. Мины можно издалека расстрелять.  
 
 `\zhabaserver\scripts\pingstaff.py` :star:  
 Сообщение админам отправляется не только админам, но и модераторам, и гвардам.  
@@ -871,7 +864,6 @@ WASD - движение, пробел - вверх, shift - вниз.
   "Durka",
   "encampment",
   "forks",
-  "globus",
   "Groznii",
   "Hiesville",
   "Imparator",
@@ -879,7 +871,6 @@ WASD - движение, пробел - вверх, shift - вниз.
   "LittleAssault",
   "mesa",
   "muhosransk",
-  "muhosransk3_1",
   "normandie",
   "OktoberDistrict",
   "peski",
@@ -887,5 +878,4 @@ WASD - движение, пробел - вверх, shift - вниз.
   "random",
   "rocket_launch",
   "STURMBOOHENVALDA",
-  "Yoba",
 ```
