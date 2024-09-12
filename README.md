@@ -1,5 +1,5 @@
 # **Информация по игре Ace of Spades 0.75 и сервере zhabaserver**
-v0.5.0  
+v0.5.1  
 by EvgenZhaba
 ____
 
@@ -712,6 +712,9 @@ https://github.com/piqueserver/piqueserver/blob/9cf7fd79a4840d2f75575b2c425d449b
 **/drop**  
 Выбросить интел.  
 
+`\zhabaserver\scripts\eternalctf.py` :star:  
+Палаткоблоки. Поставил блок = сходил в палатку. Восполнится всё (кроме мин).  
+
 `\zhabaserver\scripts\kicklimbo.py` :star:  
 Кикает тех, кто слишком долго не может определиться с выбором команды.  
 
@@ -721,7 +724,7 @@ https://github.com/piqueserver/piqueserver/blob/9cf7fd79a4840d2f75575b2c425d449b
 
 `\zhabaserver\scripts\mines.py` :star:  
 Мины!  
-При спавне даётся 1 мина, при входе в палатку запас пополняется до 5 мин. Ставить мины - ПКМ с гранатой в руке на блок. Враг проходит рядом с миной = взрыв. Мины можно издалека расстрелять.  
+При спавне даётся 1 мина, при входе в палатку запас пополняется до 5 мин. Ставить мины - ПКМ с гранатой в руке на блок. Враг проходит рядом с миной = взрыв. Мины можно издалека расстрелять.   
 
 `\zhabaserver\scripts\pingstaff.py` :star:  
 Сообщение админам отправляется не только админам, но и модераторам, и гвардам.  
@@ -729,7 +732,7 @@ https://github.com/piqueserver/piqueserver/blob/9cf7fd79a4840d2f75575b2c425d449b
 Отправить сообщение всем админам, модераторам и гвардам онлайн.  
 
 `\zhabaserver\scripts\printshortscripts.py` :star:  
-Выводит список скриптов на сервере, заменяя "piqueserver.scripts" на "ps". На первую команду клиента (автоматически при подключении) отвечает, что работает только ручной ввод команды. Строка первого ответа начинается с "Scripts enabled: " для совместимости с modloader (иначе не работаюет меню команд)  
+Выводит список скриптов на сервере, заменяя "piqueserver.scripts" на "ps". На первую команду клиента (автоматически при подключении) отвечает, что работает только ручной ввод команды. Строка первого ответа начинается с "Scripts enabled: " для совместимости с modloader (иначе не работает меню команд)  
 **/scripts**  
 Вывести список скриптов на сервере с сокращёнными именами. 
 
@@ -740,7 +743,7 @@ https://github.com/piqueserver/piqueserver/blob/9cf7fd79a4840d2f75575b2c425d449b
 Разные защиты от плохого поведения игроков или ботов.  
 
 `\zhabaserver\scripts\smallmap.py` :star:  
-Уменьшает зоны спавна палаток и интелов при малом количестве игроков. Возвращает, если много игроков. 
+Уменьшает зоны спавна палаток и интелов при малом количестве игроков. Возвращает, если много игроков.  
 
 `\zhabaserver\scripts\spadearena.py` :star:  
 Короли Ринга! Оставляет только лопатки и переносит всех на арену в воздухе.  
@@ -784,6 +787,10 @@ https://github.com/piqueserver/piqueserver/blob/9cf7fd79a4840d2f75575b2c425d449b
 
 `\zhabaserver\scripts\onectf_update.py` :star:  
 Позволяет сдать интел в чужую палатку, при этом интел не засчитается и появится в центре. Для матчей.  
+
+`\zhabaserver\scripts\tc_update.py` :star:  
+Для режима tc (и использующих его). Наносящие урон области карты теперь всегда снимают 1 хп, а не то количество, которое прописано в метадате карты.  
+
 
 ### 3.5 Самостоятельная разработка  
 
@@ -854,28 +861,43 @@ WASD - движение, пробел - вверх, shift - вниз.
   "2-4-T",
   "4rivers",
   "Artillery",
+  "Bakhmut",
   "Bocage",
+  "bridgewars",
   "burbs",
   "capitol",
   "classicgen",
   "crossfire",
   "deucehills",
+  "deck17",
   "Domain_of_Khorne",
   "Durka",
   "encampment",
+  "faceoff",
   "forks",
   "Groznii",
+  "HezeeHills",
   "Hiesville",
   "Imparator",
   "IsleOfWar",
   "LittleAssault",
   "mesa",
   "muhosransk",
+  "muhosransk5",
   "normandie",
   "OktoberDistrict",
+  "paradise",
+  "penisland",
   "peski",
   "pinpoint",
   "random",
+  "Reichstag",
   "rocket_launch",
+  "skullfort",
+  "stalingradv30",
+  "StandOff",
+  "stmat",
+  "submarine",
   "STURMBOOHENVALDA",
+  "Vsratsk"
 ```
